@@ -13,12 +13,19 @@ public:
 
     QPointF positionOnMap();
 
+protected:
+//    void keyReleaseEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+//    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+
 private:
     int m_x;
     int m_y;
     int TILE_SIZE = 200;
     QImage m_tileImage;
     QImage m_modifierImage;
+    bool m_selected;
 };
 
 #endif // MAPTILE_H

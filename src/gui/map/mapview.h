@@ -4,7 +4,6 @@
 #include <QGraphicsItem>
 #include <QGraphicsView>
 
-
 class MapView : public QFrame
 {
     Q_OBJECT
