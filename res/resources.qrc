@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image/map_tile/ground.png</file>
+        <file>image/map_tile/water.png</file>
+    </qresource>
+</RCC>

@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
-
+QT       += gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = 4X_historical_game
@@ -25,13 +25,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
-    gui/userinterfacemanager.cpp
+    gui/userinterfacemanager.cpp \
+    gui/map/mapview.cpp \
+    gui/map/maptile.cpp
 
 HEADERS += \
-        mainwindow.h \
-    gui/userinterfacemanager.h
+    gui/userinterfacemanager.h \
+    gui/map/mapview.h \
+    gui/map/maptile.h
 
 FORMS += \
-        mainwindow.ui \
     gui/userinterfacemanager.ui
+
+RESOURCES += \
+    ../res/resources.qrc
