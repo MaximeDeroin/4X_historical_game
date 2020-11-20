@@ -1,10 +1,11 @@
 #include "maptile.h"
 #include <QPainter>
 
-MapTile::MapTile(int x, int y, const QImage &tileImage):
+MapTile::MapTile(int x, int y, const QImage &tileImage, const QImage &modifierImage):
     m_x(x),
     m_y(y),
-    m_tileImage(tileImage)
+    m_tileImage(tileImage),
+    m_modifierImage(modifierImage)
 {
 
 }
@@ -23,9 +24,12 @@ void MapTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     Q_UNUSED(widget)
     double TILESIZE(static_cast<double>(TILE_SIZE));
     QRectF target(0.0, 0.0, TILESIZE, TILESIZE);
-    QRectF source(0.0, 0.0, 100.0, 100.0);
+    QRectF sourceTile(0.0, 0.0, m_tileImage.size().width(),  m_tileImage.size().height());
+    QRectF sourceModifier(0.0, 0.0, m_modifierImage.size().width(),  m_modifierImage.size().height());
 
-    painter->drawImage(target, m_tileImage, source);
+    painter->drawImage(target, m_tileImage, sourceTile);
+    if (m_modifierImage.size() != QSize(0,0))
+        painter->drawImage(target, m_modifierImage, sourceModifier);
 }
 
 QPointF MapTile::positionOnMap()

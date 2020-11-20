@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>image/map_tile/ground.png</file>
         <file>image/map_tile/water.png</file>
+        <file>image/map_tile/stone.png</file>
+        <file>image/map_tile/cow.png</file>
     </qresource>
 </RCC>

@@ -27,22 +27,33 @@ void MapView::createScene()
     m_scene = new QGraphicsScene(this);
     QImage imageGround(":/image/map_tile/ground.png");
     QImage imageWater(":/image/map_tile/water.png");
+    QImage imageStone(":/image/map_tile/stone.png");
+    QImage imageCow(":/image/map_tile/cow.png");
 
     for (int w = 0; w < 10; w++)
     {
         for (int h = 0; h < 10; h++)
         {
             QImage imageToDisplay;
+            QImage resourcesImage(0,0);
             if ((w+h) < 10)
             {
                 imageToDisplay = imageGround;
+                if (w+h == w*w)
+                {
+                    resourcesImage = imageStone;
+                }
+                else if (h*h == w+h)
+                {
+                    resourcesImage = imageCow;
+                }
             }
             else
             {
                 imageToDisplay = imageWater;
             }
 
-            MapTile *item = new MapTile(w, h, imageToDisplay);
+            MapTile *item = new MapTile(w, h, imageToDisplay, resourcesImage);
             item->setPos(item->positionOnMap());
             m_scene->addItem(item);
         }
