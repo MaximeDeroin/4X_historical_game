@@ -40,8 +40,8 @@ void MapView::createScene()
     m_scene = new QGraphicsScene(this);
     QImage imageGround(":/image/map_tile/ground.png");
     QImage imageWater(":/image/map_tile/water.png");
-    QImage imageStone(":/image/map_tile/stone.png");
-    QImage imageCow(":/image/map_tile/cow.png");
+    QImage imageStone(":/image/natural_resources/stone.png");
+    QImage imageCow(":/image/natural_resources/cow.png");
 
     for (int w = 0; w < 10; w++)
     {
