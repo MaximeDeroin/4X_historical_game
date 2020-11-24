@@ -1,6 +1,7 @@
 #include "userinterfacemanager.h"
 #include "ui_userinterfacemanager.h"
 
+
 UserInterfaceManager::UserInterfaceManager(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::UserInterfaceManager)
@@ -21,22 +22,37 @@ UserInterfaceManager::~UserInterfaceManager()
     delete ui;
 }
 
+int UserInterfaceManager::toInt(UserInterfaceManager::Page page)
+{
+    return static_cast<int>(page);
+}
+
 void UserInterfaceManager::playButtonPushed()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    if (ui->playButton->isEnabled())
+    {
+        ui->gameFrame = new MapView;
+        ui->stackedWidget->setCurrentIndex(toInt(Page::GAME));
+    }
 }
 
 void UserInterfaceManager::infoButtonPushed()
 {
+    if (ui->infoButton->isEnabled())
+    {
 
+    }
 }
 
 void UserInterfaceManager::quitButtonPushed()
 {
-    qApp->quit();
+    if (ui->quitButton->isEnabled())
+    {
+        qApp->quit();
+    }
 }
 
 void UserInterfaceManager::menuButtonPushed()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(toInt(Page::MENU));
 }

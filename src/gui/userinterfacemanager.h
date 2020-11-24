@@ -11,6 +11,15 @@ class UserInterfaceManager : public QWidget
 {
     Q_OBJECT
 
+private:
+    enum class Page
+    {
+        MENU = 0,
+        GAME = 1
+    };
+
+    int toInt(Page page);
+
 public:
     explicit UserInterfaceManager(QWidget *parent = 0);
     ~UserInterfaceManager();

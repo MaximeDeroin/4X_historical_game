@@ -1,7 +1,6 @@
 #include "maptile.h"
 #include <QPainter>
 #include <QKeyEvent>
-#include <QDebug>
 
 MapTile::MapTile(int x, int y, const QImage &tileImage, const QImage &modifierImage):
     m_x(x),
@@ -17,9 +16,6 @@ MapTile::MapTile(int x, int y, const QImage &tileImage, const QImage &modifierIm
 QRectF MapTile::boundingRect() const
 {
     return QRectF(0, 0, TILE_SIZE, TILE_SIZE);
-
-//    return QRectF((m_x-1)*TILE_SIZE, (m_y-1)*TILE_SIZE,
-//                  m_x*TILE_SIZE, m_y*TILE_SIZE);
 }
 
 void MapTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
@@ -53,34 +49,15 @@ QPointF MapTile::positionOnMap()
     return QPointF(m_x*TILE_SIZE, m_y*TILE_SIZE);
 }
 
-//void MapTile::keyReleaseEvent(QKeyEvent *event)
-//{
-//    if (event->key() == Qt::MouseButton::LeftButton)
-//    {
-//        m_selected = !m_selected;
-//    }
-//}
-
 void MapTile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mousePressEvent(event);
     update();
 }
 
-//void Chip::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-//{
-//    if (event->modifiers() & Qt::ShiftModifier) {
-//        stuff << event->pos();
-//        update();
-//        return;
-//    }
-//    QGraphicsItem::mouseMoveEvent(event);
-//}
-
 void MapTile::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseReleaseEvent(event);
     m_selected = !m_selected;
     update();
-    qDebug() << "Tile ["<<m_x<<", "<<m_y<<"] received mouseReleaseEvent";
 }

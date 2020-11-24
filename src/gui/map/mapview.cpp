@@ -5,9 +5,9 @@
 #include <qmath.h>
 
 MapView::MapView(QWidget *parent)
-    : QFrame(parent),
-      m_zoomLevel(250)
+    : QFrame(parent)
 {
+    m_zoomLevel = DEFAULT_ZOOM_LEVEL;
     setFrameStyle(Sunken | StyledPanel);
     m_graphicsView = new MapGraphicsView(this);
     m_graphicsView->setRenderHint(QPainter::Antialiasing, false);
@@ -95,7 +95,7 @@ void MapGraphicsView::wheelEvent(QWheelEvent *event)
 
 void MapView::zoomIn(int level)
 {
-    if (m_zoomLevel <= 280)
+    if (m_zoomLevel <= MAX_ZOOM_LEVEL)
     {
         m_zoomLevel += level;
     }
@@ -104,7 +104,7 @@ void MapView::zoomIn(int level)
 
 void MapView::zoomOut(int level)
 {
-    if (m_zoomLevel >= 140)
+    if (m_zoomLevel >= MIN_ZOOM_LEVEL)
     {
         m_zoomLevel -= level;
     }

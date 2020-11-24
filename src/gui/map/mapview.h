@@ -41,6 +41,10 @@ private:
 
     int m_zoomLevel;
 
+    int DEFAULT_ZOOM_LEVEL = 180;
+    int MIN_ZOOM_LEVEL = 140;
+    int MAX_ZOOM_LEVEL = 280;
+
 };
 
 #endif // MAPVIEW_H
