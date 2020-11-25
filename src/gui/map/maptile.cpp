@@ -2,15 +2,31 @@
 #include <QPainter>
 #include <QKeyEvent>
 
-MapTile::MapTile(int x, int y, const QImage &tileImage, const QImage &modifierImage):
+//MapTile::MapTile(int x, int y, const QImage &tileImage, const QImage &modifierImage):
+//    m_x(x),
+//    m_y(y),
+//    m_tileImage(tileImage),
+//    m_modifierImage(modifierImage),
+//    m_selected(false)
+//{
+//    setFlags(ItemIsSelectable);
+//    setAcceptHoverEvents(true);
+//}
+
+MapTile::MapTile(int x, int y, TileConf *tileconf):
     m_x(x),
     m_y(y),
-    m_tileImage(tileImage),
-    m_modifierImage(modifierImage),
+    m_tileImage(tileconf->image()),
+    m_modifierImage(nullptr),
     m_selected(false)
 {
     setFlags(ItemIsSelectable);
     setAcceptHoverEvents(true);
+}
+
+void MapTile::addModifier(TileConf *tileConf)
+{
+    m_modifierImage = tileConf->image();
 }
 
 QRectF MapTile::boundingRect() const
@@ -24,12 +40,16 @@ void MapTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     Q_UNUSED(widget)
     double TILESIZE(static_cast<double>(TILE_SIZE));
     QRectF target(0.0, 0.0, TILESIZE, TILESIZE);
-    QRectF sourceTile(0.0, 0.0, m_tileImage.size().width(),  m_tileImage.size().height());
-    QRectF sourceModifier(0.0, 0.0, m_modifierImage.size().width(),  m_modifierImage.size().height());
+    QRectF sourceTile(0.0, 0.0, m_tileImage->size().width(),  m_tileImage->size().height());
 
-    painter->drawImage(target, m_tileImage, sourceTile);
-    if (m_modifierImage.size() != QSize(0,0))
-        painter->drawImage(target, m_modifierImage, sourceModifier);
+    painter->drawImage(target, *m_tileImage, sourceTile);
+
+    if (m_modifierImage)
+    {
+        QRectF sourceModifier(0.0, 0.0, m_modifierImage->size().width(),  m_modifierImage->size().height());
+        if (m_modifierImage->size() != QSize(0,0))
+            painter->drawImage(target, *m_modifierImage, sourceModifier);
+    }
 
     if (m_selected)
     {

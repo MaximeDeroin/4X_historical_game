@@ -2,7 +2,9 @@
 
 #include <QHBoxLayout>
 #include "maptile.h"
+#include "confreader/mapreader.h"
 #include <qmath.h>
+#include <QMessageBox>
 
 MapView::MapView(QWidget *parent)
     : QFrame(parent)
@@ -38,11 +40,30 @@ void MapView::applyZoomLevel()
 void MapView::createScene()
 {
     m_scene = new QGraphicsScene(this);
+
+    bool mapReadSucessfully = true;
+//    MapReader reader(":/map/map1.map", mapReadSucessfully);
+    MapReader reader(":/map/island.map", mapReadSucessfully);
+
+    if (mapReadSucessfully)
+    {
+        for (MapTile* tile: reader.mapTiles())
+        {
+            tile->setPos(tile->positionOnMap());
+            m_scene->addItem(tile);
+        }
+    }
+    else
+    {
+        QMessageBox messageBox("Error reading map", reader.error(),QMessageBox::Icon::Critical, 0,0,0);
+        messageBox.setFixedSize(500,200);
+        messageBox.exec();
+    }
+    /*
     QImage imageGround(":/image/map_tile/ground.png");
     QImage imageWater(":/image/map_tile/water.png");
     QImage imageStone(":/image/natural_resources/stone.png");
     QImage imageCow(":/image/natural_resources/cow.png");
-
     for (int w = 0; w < 10; w++)
     {
         for (int h = 0; h < 10; h++)
@@ -70,7 +91,7 @@ void MapView::createScene()
             item->setPos(item->positionOnMap());
             m_scene->addItem(item);
         }
-    }
+    }*/
 }
 
 

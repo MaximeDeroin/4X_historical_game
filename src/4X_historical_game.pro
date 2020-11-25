@@ -27,12 +27,18 @@ SOURCES += \
         main.cpp \
     gui/userinterfacemanager.cpp \
     gui/map/mapview.cpp \
-    gui/map/maptile.cpp
+    gui/map/maptile.cpp \
+    gui/map/confreader/tilebonus.cpp \
+    gui/map/confreader/mapreader.cpp \
+    gui/map/confreader/tileconf.cpp
 
 HEADERS += \
     gui/userinterfacemanager.h \
     gui/map/mapview.h \
-    gui/map/maptile.h
+    gui/map/maptile.h \
+    gui/map/confreader/tilebonus.h \
+    gui/map/confreader/mapreader.h \
+    gui/map/confreader/tileconf.h
 
 FORMS += \
     gui/userinterfacemanager.ui
