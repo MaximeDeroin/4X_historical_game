@@ -31,7 +31,8 @@ void UserInterfaceManager::playButtonPushed()
 {
     if (ui->playButton->isEnabled())
     {
-        ui->gameFrame = new MapView;
+        QString mapName(":/map/island.map");
+        ui->gameFrame->loadMap(mapName);
         ui->stackedWidget->setCurrentIndex(toInt(Page::GAME));
     }
 }

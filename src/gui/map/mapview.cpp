@@ -18,13 +18,18 @@ MapView::MapView(QWidget *parent)
     m_graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
     m_graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 
-    this->createScene();
+}
+
+void MapView::loadMap(const QString& mapName)
+{
+    this->createScene(mapName);
     m_graphicsView->setScene(m_scene);
 
     QHBoxLayout *topLayout = new QHBoxLayout;
     topLayout->addWidget(m_graphicsView, 0, 0);
     setLayout(topLayout);
     this->applyZoomLevel();
+
 }
 
 void MapView::applyZoomLevel()
@@ -37,13 +42,12 @@ void MapView::applyZoomLevel()
     m_graphicsView->setMatrix(matrix);
 }
 
-void MapView::createScene()
+void MapView::createScene(const QString& mapName)
 {
     m_scene = new QGraphicsScene(this);
-
     bool mapReadSucessfully = true;
 //    MapReader reader(":/map/map1.map", mapReadSucessfully);
-    MapReader reader(":/map/island.map", mapReadSucessfully);
+    MapReader reader(mapName, mapReadSucessfully);
 
     if (mapReadSucessfully)
     {

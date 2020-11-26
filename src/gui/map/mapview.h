@@ -25,6 +25,7 @@ class MapView : public QFrame
 public:
     explicit MapView(QWidget *parent = nullptr);
 
+    void loadMap(const QString &mapName);
 public slots:
     void zoomIn(int level = 1);
     void zoomOut(int level = 1);
@@ -37,7 +38,7 @@ private:
 
     QGraphicsScene *m_scene;
 
-    void createScene();
+    void createScene(const QString &mapName);
 
     int m_zoomLevel;
 
