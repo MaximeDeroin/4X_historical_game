@@ -34,7 +34,7 @@ QVector<MapTile *> MapReader::mapTiles() const
     return m_mapTiles;
 }
 
-TileConf *MapReader::findTileConf(QChar abbreviation, TileConf::Type type)
+TileConf *MapReader::findTileConf(const QChar& abbreviation, TileConf::Type type)
 {
     QString abbr(abbreviation);
     QVector<TileConf*> confList;

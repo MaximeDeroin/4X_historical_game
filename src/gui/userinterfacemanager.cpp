@@ -29,7 +29,7 @@ int UserInterfaceManager::toInt(UserInterfaceManager::Page page)
 
 void UserInterfaceManager::playButtonPushed()
 {
-    if (ui->playButton->isEnabled())
+    if (isVisibleAndEnabled(ui->playButton))
     {
         QString mapName(":/map/island.map");
         ui->gameFrame->loadMap(mapName);
@@ -39,7 +39,7 @@ void UserInterfaceManager::playButtonPushed()
 
 void UserInterfaceManager::infoButtonPushed()
 {
-    if (ui->infoButton->isEnabled())
+    if (isVisibleAndEnabled(ui->infoButton))
     {
 
     }
@@ -47,7 +47,7 @@ void UserInterfaceManager::infoButtonPushed()
 
 void UserInterfaceManager::quitButtonPushed()
 {
-    if (ui->quitButton->isEnabled())
+    if (isVisibleAndEnabled(ui->quitButton))
     {
         qApp->quit();
     }
@@ -55,5 +55,13 @@ void UserInterfaceManager::quitButtonPushed()
 
 void UserInterfaceManager::menuButtonPushed()
 {
-    ui->stackedWidget->setCurrentIndex(toInt(Page::MENU));
+    if (isVisibleAndEnabled(ui->menuButton))
+    {
+        ui->stackedWidget->setCurrentIndex(toInt(Page::MENU));
+    }
+}
+
+bool UserInterfaceManager::isVisibleAndEnabled(QPushButton* button)
+{
+    return button->isVisible() && button->isEnabled();
 }

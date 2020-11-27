@@ -8,27 +8,41 @@
 #include "../maptile.h"
 #include "tileconf.h"
 
+/*!
+ * \brief This class reads a game map file and builds the corresponding tile configuration.
+ * The tile configuration of the map is stored in m_mapTiles (public getter mapTiles()).
+ */
 class MapReader
 {
 public:
+    /*!
+     * \brief Constructor of the class.
+     * \param[in] filename Name of the map file.
+     * \param[out] success Indicates if the map was read successfully.
+     */
     MapReader(const QString &filename, bool &success);
 
+    /*!
+     * \brief Errors encountered whhile reading the map file.
+     * Empty if no error.
+     * \return List of errors in a string.
+     */
     QString error() const;
 
-    QVector<MapTile *> mapTiles() const;
+    QVector<MapTile *> mapTiles() const; //!< Getter of m_mapTiles.
 
 private:
-    QString m_mapFilename;
-    QString m_mapName;
-    int m_mapWidth;
-    int m_mapHeight;
+    QString m_mapFilename; //!< Name of the map file.
+    QString m_mapName; //!< Name of the map.
+    int m_mapWidth; //!< Width of the map.
+    int m_mapHeight; //!< Height of the map.
 
-    QString m_error;
+    QString m_error; //!< Errors encountered while reading the map file.
 
-    QString TILES_CONF_FOLDER = "map/tiles";
-    QString RESOURCES_CONF_FOLDER = "map/resources";
+    QString TILES_CONF_FOLDER = "map/tiles"; //!< Folder of background tile type configurations.
+    QString RESOURCES_CONF_FOLDER = "map/resources"; //!< Folder of resource type configurations.
 
-    enum class ErrorCode
+    enum class ErrorCode //!< Possible error codes.
     {
         EMPTY_FILE = 0,
         GAME_WIDTH_MISSING = 1,
@@ -44,25 +58,69 @@ private:
         RESOURCE_MAP_TILE_NOT_FOUND = 11,
     };
 
-    QMap<ErrorCode, QString> m_errorDescription;
+    QMap<ErrorCode, QString> m_errorDescription; //!< Description of each of the errors.
 
-    QVector<MapTile*> m_mapTiles;
+    QVector<MapTile*> m_mapTiles; //!< Map tile configuration.
 
-    QVector<TileConf*> m_tilesConf;
-    QVector<TileConf*> m_resourcesConf;
+    QVector<TileConf*> m_tilesConf; //!< Tile type configurations for background tiles.
+    QVector<TileConf*> m_resourcesConf; //!< Tile type configurations for resource tiles.
 
-    TileConf* findTileConf(QChar abbreviation, TileConf::Type type);
+    /*!
+     * \brief Find the tile type configuration for a given tile abbreviation.
+     * \param[in] abbreviation Tile abbreviation.
+     * \param[in] type Tile type.
+     * \return Tile type configuration.
+     */
+    TileConf* findTileConf(const QChar& abbreviation, TileConf::Type type);
 
     void parse(QFile *file, bool &success);
 
+    /*!
+     * \brief Reads the first part of the map file containing the map parameters.
+     * \param[in, out] fileStream File stream containing the map file.
+     * \return True if the operation has not failed.
+     */
     bool readMapParameters(QTextStream &fileStream);
+
+    /*!
+     * \brief Reads the part of the map file containing the background tile description.
+     * \param[in, out] fileStream File stream containing the map file.
+     * \return True if the operation has not failed.
+     */
     bool readMapTiles(QTextStream &fileStream);
+
+    /*!
+     * \brief Reads the part of the map file describing the presence and type of
+     * resource for each tile.
+     * \param[in, out] fileStream File stream containing the map file.
+     * \return True if the operation has not failed.
+     */
     bool readMapResources(QTextStream &fileStream);
 
+    /*!
+     * \brief Read the configuration of all the possible tiles and resources to display on the
+     * game map.
+     * \return True if the configuration reading has not failed.
+     * \todo Move this operation to a separate class.
+     */
     bool readTileConf();
 
+    /*!
+     * \brief Fills m_errorDescription with error descriptions.
+     */
     void initErrorDescriptions();
+
+    /*!
+     * \brief Adds the error to the error list m_error.
+     * \param[in] error Error code.
+     */
     void addError(ErrorCode error);
+
+    /*!
+     * \brief Indicates if the error code has a description.
+     * \param [in] code Error code.
+     * \return True if the the error code has a description.
+     */
     bool descriptionFound(ErrorCode code);
 };
 
