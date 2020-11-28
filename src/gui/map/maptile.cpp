@@ -40,9 +40,13 @@ void MapTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     Q_UNUSED(widget)
     double TILESIZE(static_cast<double>(TILE_SIZE));
     QRectF target(0.0, 0.0, TILESIZE, TILESIZE);
-    QRectF sourceTile(0.0, 0.0, m_tileImage->size().width(),  m_tileImage->size().height());
 
-    painter->drawImage(target, *m_tileImage, sourceTile);
+    if (m_tileImage)
+    {
+        QRectF sourceTile(0.0, 0.0, m_tileImage->size().width(),  m_tileImage->size().height());
+
+        painter->drawImage(target, *m_tileImage, sourceTile);
+    }
 
     if (m_modifierImage)
     {

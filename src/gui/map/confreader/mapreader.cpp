@@ -1,6 +1,6 @@
-#include "mapreader.h"
 #include <QDebug>
-#include <QDir>
+#include "mapreader.h"
+#include "tileconfreader.h"
 
 MapReader::MapReader(const QString &filename, bool &success):
     m_mapFilename(filename),
@@ -11,7 +11,14 @@ MapReader::MapReader(const QString &filename, bool &success):
     m_mapTiles(QVector<MapTile*>())
 {
     success = true;
-    success &= this->readTileConf();
+
+    success &= TileConfReader::ReadAllTileConfigurations(m_tilesConf, m_resourcesConf);
+
+    if (!success)
+    {
+        qDebug() << "Tile configuration reading failed";
+        return;
+    }
 
     this->initErrorDescriptions();
     QFile* file = new QFile(filename);
@@ -206,40 +213,6 @@ bool MapReader::readMapResources(QTextStream &fileStream)
     }
 
     return m_error.isEmpty();
-}
-
-bool MapReader::readTileConf()
-{
-    QDir confFolder("../../conf/");
-    QDir tilesConfDir(confFolder.path()+QDir::separator()+TILES_CONF_FOLDER);
-    QDir resourcesConfDir(confFolder.path()+QDir::separator()+RESOURCES_CONF_FOLDER);
-
-    qDebug() << "tile conf: " << tilesConfDir.absolutePath();
-
-    bool success = true;
-
-    for (const QString& file: tilesConfDir.entryList(QStringList() << "*.conf", QDir::Files))
-    {
-        bool ok = true;
-        QString filepath(tilesConfDir.path()+QDir::separator()+file);
-        qDebug() << "found tile conf: " << filepath;
-        TileConf* tileConf = new TileConf(filepath, TileConf::Type::TILE, ok);
-        success &= ok;
-        if (ok)
-            m_tilesConf.push_back(tileConf);
-    }
-
-    for (const QString& file: resourcesConfDir.entryList(QStringList() << "*.conf", QDir::Files))
-    {
-        bool ok = true;
-        QString filepath(resourcesConfDir.path()+QDir::separator()+file);
-        qDebug() << "found resource conf: " << filepath;
-        TileConf* tileConf = new TileConf(filepath, TileConf::Type::NATURAL_RESOURCE, ok);
-        success &= ok;
-        if (ok)
-            m_resourcesConf.push_back(tileConf);
-    }
-    return success;
 }
 
 void MapReader::initErrorDescriptions()

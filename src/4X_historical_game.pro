@@ -30,7 +30,8 @@ SOURCES += \
     gui/map/maptile.cpp \
     gui/map/confreader/tilebonus.cpp \
     gui/map/confreader/mapreader.cpp \
-    gui/map/confreader/tileconf.cpp
+    gui/map/confreader/tileconf.cpp \
+    gui/map/confreader/tileconfreader.cpp
 
 HEADERS += \
     gui/userinterfacemanager.h \
@@ -38,7 +39,8 @@ HEADERS += \
     gui/map/maptile.h \
     gui/map/confreader/tilebonus.h \
     gui/map/confreader/mapreader.h \
-    gui/map/confreader/tileconf.h
+    gui/map/confreader/tileconf.h \
+    gui/map/confreader/tileconfreader.h
 
 FORMS += \
     gui/userinterfacemanager.ui

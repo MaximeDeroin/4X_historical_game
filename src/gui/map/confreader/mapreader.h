@@ -6,7 +6,7 @@
 #include <QFile>
 #include <QTextStream>
 #include "../maptile.h"
-#include "tileconf.h"
+#include "tileconfreader.h"
 
 /*!
  * \brief This class reads a game map file and builds the corresponding tile configuration.
@@ -38,9 +38,6 @@ private:
     int m_mapHeight; //!< Height of the map.
 
     QString m_error; //!< Errors encountered while reading the map file.
-
-    QString TILES_CONF_FOLDER = "map/tiles"; //!< Folder of background tile type configurations.
-    QString RESOURCES_CONF_FOLDER = "map/resources"; //!< Folder of resource type configurations.
 
     enum class ErrorCode //!< Possible error codes.
     {
@@ -96,14 +93,6 @@ private:
      * \return True if the operation has not failed.
      */
     bool readMapResources(QTextStream &fileStream);
-
-    /*!
-     * \brief Read the configuration of all the possible tiles and resources to display on the
-     * game map.
-     * \return True if the configuration reading has not failed.
-     * \todo Move this operation to a separate class.
-     */
-    bool readTileConf();
 
     /*!
      * \brief Fills m_errorDescription with error descriptions.
