@@ -63,39 +63,6 @@ void MapView::createScene(const QString& mapName)
         messageBox.setFixedSize(500,200);
         messageBox.exec();
     }
-    /*
-    QImage imageGround(":/image/map_tile/ground.png");
-    QImage imageWater(":/image/map_tile/water.png");
-    QImage imageStone(":/image/natural_resources/stone.png");
-    QImage imageCow(":/image/natural_resources/cow.png");
-    for (int w = 0; w < 10; w++)
-    {
-        for (int h = 0; h < 10; h++)
-        {
-            QImage imageToDisplay;
-            QImage resourcesImage(0,0);
-            if ((w+h) < 10)
-            {
-                imageToDisplay = imageGround;
-                if (w+h == w*w)
-                {
-                    resourcesImage = imageStone;
-                }
-                else if (h*h == w+h)
-                {
-                    resourcesImage = imageCow;
-                }
-            }
-            else
-            {
-                imageToDisplay = imageWater;
-            }
-
-            MapTile *item = new MapTile(w, h, imageToDisplay, resourcesImage);
-            item->setPos(item->positionOnMap());
-            m_scene->addItem(item);
-        }
-    }*/
 }
 
 

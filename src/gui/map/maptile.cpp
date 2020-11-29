@@ -2,17 +2,6 @@
 #include <QPainter>
 #include <QKeyEvent>
 
-//MapTile::MapTile(int x, int y, const QImage &tileImage, const QImage &modifierImage):
-//    m_x(x),
-//    m_y(y),
-//    m_tileImage(tileImage),
-//    m_modifierImage(modifierImage),
-//    m_selected(false)
-//{
-//    setFlags(ItemIsSelectable);
-//    setAcceptHoverEvents(true);
-//}
-
 MapTile::MapTile(int x, int y, TileConf *tileconf):
     m_x(x),
     m_y(y),
