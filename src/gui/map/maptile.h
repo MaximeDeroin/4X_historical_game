@@ -26,7 +26,18 @@ public:
      */
     void addModifier(TileConf* tileConf);
 
+    /*!
+     * \brief Gives bounds of the tile, relative to the tile position on the view.
+     * \return Bounds of the tile.
+     */
     QRectF boundingRect() const override;
+
+    /*!
+     * \brief Explains how the tile should be painted on screen.
+     * \param[in] painter Painter for the tile?
+     * \param[in] item Unused. Needed for ovverride.
+     * \param[in] widget Unused. Needed for ovverride.
+     */
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 
     /*!
@@ -41,6 +52,7 @@ protected:
      * \param[in] event Event.
      */
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+
     /*!
      * \brief Triggered when the mouse is released on the tile.
      * \param[in] event Event.
