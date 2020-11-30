@@ -1,12 +1,13 @@
 #ifndef TILECONF_H
 #define TILECONF_H
 #include <QString>
-#include <QVector>
+#include <QMap>
 #include <QImage>
 #include "tilebonus.h"
 
-typedef QVector<QPair<TileBonus::Type, int>> TileBonuses;
-typedef QPair<TileBonus::Type, int> BonusValue;
+//typedef QPair<TileBonus::Type, int> BonusValue;
+//typedef QVector<BonusValue> TileBonuses;
+typedef QMap<TileBonus::Type, int> TileBonuses;
 
 /*!
  * \brief Stores the information of a tile configuration.
@@ -15,7 +16,7 @@ class TileConf
 {
 public:
     /*!
-     * \brief Tile category: background ot resource.
+     * \brief Tile category: background or resource.
      */
     enum class Type
     {
@@ -39,13 +40,17 @@ public:
 
     QImage *image() const; //!< Getter of m_image.
 
+    QString name() const; //!< Getter of m_name.
+
+    TileBonuses tileBonuses() const; //!< Getter of m_tileBonuses.
+
 private:
     TileConf::Type m_type; //!< Tile category.
 
     QString m_name; //!< Name of the tile type.
     QString m_imageName; //!< Name of the image file.
     QString m_mapAbbreviation; //!< Abbreviation of the tile type.
-    QVector<QPair<TileBonus::Type, int>> m_tileBonuses; //!< Bonuses of the tile.
+    TileBonuses m_tileBonuses; //!< Bonuses of the tile.
 
     QImage* m_image; //!< Image of the tile.
 };

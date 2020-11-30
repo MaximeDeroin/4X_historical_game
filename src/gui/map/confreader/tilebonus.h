@@ -31,6 +31,15 @@ public:
      * \return Type of tile bonus.
      */
     static TileBonus::Type bonusType(const QString &typeName);
+
+
+    /*!
+     * \brief Returns the name of the type of tile bonus to display on the map.
+     * \param[in] bonusType Type of bonus in the map file.
+     * \return Type of tile bonus.
+     */
+    static QString bonusName(TileBonus::Type bonusType);
+
 };
 
 #endif // TILEBONUS_H

@@ -23,3 +23,13 @@ QImage *TileConf::image() const
 {
     return m_image;
 }
+
+QString TileConf::name() const
+{
+    return m_name;
+}
+
+QMap<TileBonus::Type, int> TileConf::tileBonuses() const
+{
+    return m_tileBonuses;
+}

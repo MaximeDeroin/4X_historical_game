@@ -56,7 +56,7 @@ bool TileConfReader::parseTileConf(TileConf::Type type, QFile *file, TileConf*& 
     QString name;
     QString imageName;
     QString mapAbbreviation;
-    QVector<QPair<TileBonus::Type, int>> tileBonuses;
+    TileBonuses tileBonuses;
 
     QImage* image = nullptr;
 
@@ -155,7 +155,8 @@ bool TileConfReader::readTileBonuses(QTextStream &fileStream, TileBonuses &tileB
             return false;
         }
 
-        tileBonuses.push_back(BonusValue(bonusType, value));
+        tileBonuses[bonusType] = value;
+        //        tileBonuses.push_back(BonusValue(bonusType, value));
     }
 
     return true;

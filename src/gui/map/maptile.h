@@ -16,9 +16,9 @@ public:
      * \brief Constructor of the class.
      * \param[in] x Abscissa of the tile.
      * \param[in] y Ordinate of the tile.
-     * \param[in] tileconf Tile type configuration.
+     * \param[in] tileConf Tile type configuration.
      */
-    explicit MapTile(int x, int y, TileConf* tileconf);
+    explicit MapTile(int x, int y, TileConf* tileConf);
 
     /*!
      * \brief Adds a modifier(resource) to the tile.
@@ -59,6 +59,8 @@ protected:
      */
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
+    void addTileBonuses(const TileBonuses& bonusesToAdd);
+
 private:
     int m_x; //!< Abscissa of the tile.
     int m_y; //!< Ordinate of the tile.
@@ -66,6 +68,16 @@ private:
     QImage* m_tileImage; //!< Image of the background of the tile.
     QImage* m_modifierImage; //!< Image of the tile modifier.
     bool m_selected; //!< indicates if the tile was selected.
+
+    TileConf* m_backgroundTileConf;
+    TileConf* m_modifierTileConf;
+
+    TileBonuses m_tileBonuses; //!< Tile bonuses.
+
+    /*!
+     * \brief Updates the message to display when the player hovers over the tile.
+     */
+    void updateToolTip();
 };
 
 #endif // MAPTILE_H

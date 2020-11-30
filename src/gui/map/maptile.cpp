@@ -1,21 +1,32 @@
 #include "maptile.h"
 #include <QPainter>
 #include <QKeyEvent>
+#include <QDebug>
 
-MapTile::MapTile(int x, int y, TileConf *tileconf):
+MapTile::MapTile(int x, int y, TileConf *tileConf):
     m_x(x),
     m_y(y),
-    m_tileImage(tileconf->image()),
+    m_tileImage(tileConf->image()),
     m_modifierImage(nullptr),
-    m_selected(false)
+    m_selected(false),
+    m_backgroundTileConf(tileConf),
+    m_modifierTileConf(nullptr),
+    m_tileBonuses()
 {
+    addTileBonuses(tileConf->tileBonuses());
+
     setFlags(ItemIsSelectable);
     setAcceptHoverEvents(true);
+    setFocus(Qt::MouseFocusReason);
+    this->updateToolTip();
 }
 
 void MapTile::addModifier(TileConf *tileConf)
 {
     m_modifierImage = tileConf->image();
+    addTileBonuses(tileConf->tileBonuses());
+    m_modifierTileConf = tileConf;
+    this->updateToolTip();
 }
 
 QRectF MapTile::boundingRect() const
@@ -70,7 +81,50 @@ void MapTile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void MapTile::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    qDebug() << m_x << ", " << m_y << "pressed ";
     QGraphicsItem::mouseReleaseEvent(event);
     m_selected = !m_selected;
     update();
+}
+
+void MapTile::addTileBonuses(const TileBonuses &bonusesToAdd)
+{
+    for (TileBonus::Type type: bonusesToAdd.keys())
+    {
+        bool typeAlreadyPresent = m_tileBonuses.keys().contains(type);
+
+        if (typeAlreadyPresent)
+        {
+            m_tileBonuses[type] += bonusesToAdd[type];
+        }
+        else
+        {
+            m_tileBonuses[type] = bonusesToAdd[type];
+        }
+    }
+}
+
+void MapTile::updateToolTip()
+{
+    QString toolTip;
+
+    if (m_backgroundTileConf)
+    {
+        toolTip += m_backgroundTileConf->name();
+    }
+
+    if (m_modifierTileConf && m_modifierTileConf->name() != "None")
+    {
+        toolTip += "\n";
+        toolTip +=m_modifierTileConf->name();
+    }
+
+    for (TileBonus::Type type: m_tileBonuses.keys())
+    {
+        toolTip += "\n";
+        toolTip += QString("%1 : %2").arg(TileBonus::bonusName(type))
+                                     .arg(m_tileBonuses[type]);
+    }
+
+    setToolTip(toolTip);
 }
