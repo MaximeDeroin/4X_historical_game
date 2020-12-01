@@ -7,6 +7,7 @@
         <file>map/map1.map</file>
         <file>../conf/conflocation</file>
         <file>map/island.map</file>
+        <file>map/island_1v1.map</file>
     </qresource>
     <qresource prefix="/../conf"/>
 </RCC>
