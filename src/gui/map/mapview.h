@@ -7,7 +7,7 @@
 
 class MapView;
 /*!
- * \brief Ovverride of QGraphicsView to add zoom with mouse wheel button.
+ * \brief Override of QGraphicsView to add zoom with mouse wheel button.
  */
 class MapGraphicsView : public QGraphicsView
 {
@@ -25,6 +25,10 @@ public:
      */
     void wheelEvent(QWheelEvent *event) override;
 
+    /*!
+     * \brief Initializes graphics view parameters.
+     */
+    void initializeParameters();
 private:
     MapView *m_view; //!< View associated with the class.
 };

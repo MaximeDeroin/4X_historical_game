@@ -5,6 +5,7 @@
 #include "confreader/mapreader.h"
 #include <qmath.h>
 #include <QMessageBox>
+#include <QDebug>
 
 MapView::MapView(QWidget *parent)
     : QFrame(parent)
@@ -12,12 +13,7 @@ MapView::MapView(QWidget *parent)
     m_zoomLevel = DEFAULT_ZOOM_LEVEL;
     setFrameStyle(Sunken | StyledPanel);
     m_graphicsView = new MapGraphicsView(this);
-    m_graphicsView->setRenderHint(QPainter::Antialiasing, false);
-    m_graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
-    m_graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
-    m_graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-    m_graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-
+    m_graphicsView->initializeParameters();
 }
 
 void MapView::loadMap(const QString& mapName)
@@ -69,7 +65,17 @@ void MapView::createScene(const QString& mapName)
 MapGraphicsView::MapGraphicsView(MapView *view):
     m_view(view)
 {
+}
 
+void MapGraphicsView::initializeParameters()
+{
+    this->setRenderHint(QPainter::Antialiasing, false);
+    this->setOptimizationFlags(QGraphicsView::DontSavePainterState);
+    this->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+    this->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    this->setDragMode(QGraphicsView::RubberBandDrag);
+//    this->setDragMode(QGraphicsView::ScrollHandDrag);
+    this->setInteractive(true);
 }
 
 void MapGraphicsView::wheelEvent(QWheelEvent *event)
