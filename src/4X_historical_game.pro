@@ -31,7 +31,12 @@ SOURCES += \
     gui/map/confreader/tilebonus.cpp \
     gui/map/confreader/mapreader.cpp \
     gui/map/confreader/tileconf.cpp \
-    gui/map/confreader/tileconfreader.cpp
+    gui/map/confreader/tileconfreader.cpp \
+    unit/unit.cpp \
+    city/city.cpp \
+    building/building.cpp \
+    engine/gamemanager.cpp \
+    engine/playermanager.cpp
 
 HEADERS += \
     gui/userinterfacemanager.h \
@@ -40,7 +45,12 @@ HEADERS += \
     gui/map/confreader/tilebonus.h \
     gui/map/confreader/mapreader.h \
     gui/map/confreader/tileconf.h \
-    gui/map/confreader/tileconfreader.h
+    gui/map/confreader/tileconfreader.h \
+    unit/unit.h \
+    city/city.h \
+    building/building.h \
+    engine/gamemanager.h \
+    engine/playermanager.h
 
 FORMS += \
     gui/userinterfacemanager.ui

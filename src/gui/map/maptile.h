@@ -59,6 +59,10 @@ protected:
      */
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
+    /*!
+     * \brief Add bonuses to the current instance.
+     * \param[in] bonusesToAdd Bonuses to add.
+     */
     void addTileBonuses(const TileBonuses& bonusesToAdd);
 
 private:
@@ -69,8 +73,8 @@ private:
     QImage* m_modifierImage; //!< Image of the tile modifier.
     bool m_selected; //!< indicates if the tile was selected.
 
-    TileConf* m_backgroundTileConf;
-    TileConf* m_modifierTileConf;
+    TileConf* m_backgroundTileConf; //!< Configuration of the background.
+    TileConf* m_modifierTileConf; //!< Configuration of the modifier.
 
     TileBonuses m_tileBonuses; //!< Tile bonuses.
 
