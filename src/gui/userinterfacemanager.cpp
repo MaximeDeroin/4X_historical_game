@@ -4,7 +4,8 @@
 
 UserInterfaceManager::UserInterfaceManager(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::UserInterfaceManager)
+    ui(new Ui::UserInterfaceManager),
+    m_gameManager(new GameManager)
 {
     ui->setupUi(this);
 
@@ -32,8 +33,12 @@ void UserInterfaceManager::playButtonPushed()
     if (isVisibleAndEnabled(ui->playButton))
     {
         QString mapName(":/map/island_1v1.map");
-        ui->gameFrame->loadMap(mapName);
-        ui->stackedWidget->setCurrentIndex(toInt(Page::GAME));
+
+        if(m_gameManager->openMap(mapName))
+        {
+            ui->gameFrame->loadMap(m_gameManager->mapTiles());
+            ui->stackedWidget->setCurrentIndex(toInt(Page::GAME));
+        }
     }
 }
 

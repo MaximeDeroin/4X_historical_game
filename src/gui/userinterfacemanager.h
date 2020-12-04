@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QPushButton>
 
+#include "../engine/gamemanager.h"
+
 namespace Ui {
 class UserInterfaceManager;
 }
@@ -66,6 +68,8 @@ private slots:
 
 private:
     Ui::UserInterfaceManager *ui; //!< GUI description.
+
+    GameManager* m_gameManager; //!< Game manager.
 
     /*!
      * \brief Indicates if a QPushbutton instance is enabled and visible.

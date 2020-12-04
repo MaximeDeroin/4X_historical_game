@@ -36,7 +36,8 @@ SOURCES += \
     city/city.cpp \
     building/building.cpp \
     engine/gamemanager.cpp \
-    engine/playermanager.cpp
+    engine/playermanager.cpp \
+    gui/map/mapmanager.cpp
 
 HEADERS += \
     gui/userinterfacemanager.h \
@@ -50,7 +51,8 @@ HEADERS += \
     city/city.h \
     building/building.h \
     engine/gamemanager.h \
-    engine/playermanager.h
+    engine/playermanager.h \
+    gui/map/mapmanager.h
 
 FORMS += \
     gui/userinterfacemanager.ui

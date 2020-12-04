@@ -4,6 +4,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsView>
 #include <QWheelEvent>
+#include "maptile.h"
 
 class MapView;
 /*!
@@ -49,9 +50,9 @@ public:
 
     /*!
      * \brief Load a map file and display the game.
-     * \param[in] mapName Name of the map file.
+     * \param[in] mapTiles Map tiles to display.
      */
-    void loadMap(const QString &mapName);
+    void loadMap(const QVector<MapTile *> &mapTiles);
 
 public slots:
     /*!
@@ -85,10 +86,10 @@ private:
 
     /*!
      * \brief Creates the scene with elements described in the map file.
-     * \param[in] mapName Name of the map file.
+     * \param[in] mapTiles Map tiles to display.
      * \todo move map loading in loadMap (MapReader instanciation)
      */
-    void createScene(const QString &mapName);
+    void createScene(const QVector<MapTile *> &mapTiles);
 };
 
 #endif // MAPVIEW_H

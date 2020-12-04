@@ -1,7 +1,6 @@
 #include "mapview.h"
 
 #include <QHBoxLayout>
-#include "maptile.h"
 #include "confreader/mapreader.h"
 #include <qmath.h>
 #include <QMessageBox>
@@ -16,10 +15,9 @@ MapView::MapView(QWidget *parent)
     m_graphicsView->initializeParameters();
 }
 
-void MapView::loadMap(const QString& mapName)
+void MapView::loadMap(const QVector<MapTile *> &mapTiles)
 {
-    this->createScene(mapName);
-    m_graphicsView->setScene(m_scene);
+    this->createScene(mapTiles);
 
     QHBoxLayout *topLayout = new QHBoxLayout;
     topLayout->addWidget(m_graphicsView, 0, 0);
@@ -38,27 +36,35 @@ void MapView::applyZoomLevel()
     m_graphicsView->setMatrix(matrix);
 }
 
-void MapView::createScene(const QString& mapName)
+void MapView::createScene(const QVector<MapTile *>& mapTiles)
 {
     m_scene = new QGraphicsScene(this);
-    bool mapReadSucessfully = true;
-//    MapReader reader(":/map/map1.map", mapReadSucessfully);
-    MapReader reader(mapName, mapReadSucessfully);
 
-    if (mapReadSucessfully)
+    for (MapTile* tile: mapTiles)
     {
-        for (MapTile* tile: reader.mapTiles())
-        {
-            tile->setPos(tile->positionOnMap());
-            m_scene->addItem(tile);
-        }
+        tile->setPos(tile->positionOnMap());
+        m_scene->addItem(tile);
     }
-    else
-    {
-        QMessageBox messageBox("Error reading map", reader.error(),QMessageBox::Icon::Critical, 0,0,0);
-        messageBox.setFixedSize(500,200);
-        messageBox.exec();
-    }
+    m_graphicsView->setScene(m_scene);
+
+//    bool mapReadSucessfully = true;
+//    MapReader reader(":/map/map1.map", mapReadSucessfully);
+//    MapReader reader(mapName, mapReadSucessfully);
+
+//    if (mapReadSucessfully)
+//    {
+//        for (MapTile* tile: reader.mapTiles())
+//        {
+//            tile->setPos(tile->positionOnMap());
+//            m_scene->addItem(tile);
+//        }
+//    }
+//    else
+//    {
+//        QMessageBox messageBox("Error reading map", reader.error(),QMessageBox::Icon::Critical, 0,0,0);
+//        messageBox.setFixedSize(500,200);
+//        messageBox.exec();
+//    }
 }
 
 
