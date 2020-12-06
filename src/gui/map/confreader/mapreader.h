@@ -31,6 +31,10 @@ public:
 
     QVector<MapTile *> mapTiles() const; //!< Getter of m_mapTiles.
 
+    int mapWidth() const; //!< Getter of m_mapWidth.
+
+    int mapHeight() const; //!< Getter of m_mapHeight.
+
 private:
     QString m_mapFilename; //!< Name of the map file.
     QString m_mapName; //!< Name of the map.

@@ -15,6 +15,8 @@ bool MapManager::openMap(const QString &filename)
     if (mapReadSucessfully)
     {
         m_mapTiles = reader.mapTiles();
+        m_mapWidth = reader.mapWidth();
+        m_mapHeight = reader.mapHeight();
     }
     else
     {

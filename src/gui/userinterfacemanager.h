@@ -44,6 +44,12 @@ public:
 
     ~UserInterfaceManager(); //!< Default destructor.
 
+signals:
+    /*!
+     * \brief Indicates that the current player ended their turn.
+     */
+    void endCurrentPlayerTurn();
+
 private slots:
     /*!
      * \brief Manages a push on the "Play" button.
@@ -62,9 +68,21 @@ private slots:
     void quitButtonPushed();
 
     /*!
-     * \brief Manages a push on the "Menu" button.
+     * \brief Manages a push on the "End Turn" button.
      */
-    void menuButtonPushed();
+    void endTurnButtonPushed();
+
+    /*!
+     * \brief Displays a change of turn.
+     * \param[in] turnNumber New turn number.
+     */
+    void currentTurnChanged(int turnNumber);
+
+    /*!
+     * \brief Displays a change of player.
+     * \param[in] playerNumber New player number.
+     */
+    void currentPlayerChanged(int playerNumber);
 
 private:
     Ui::UserInterfaceManager *ui; //!< GUI description.

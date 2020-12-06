@@ -1,6 +1,7 @@
 #include "playermanager.h"
 
-PlayerManager::PlayerManager():
+PlayerManager::PlayerManager(int playerNumber):
+    m_playerNumber(playerNumber),
     m_cities()
 {
 

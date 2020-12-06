@@ -13,7 +13,15 @@ UserInterfaceManager::UserInterfaceManager(QWidget *parent) :
     connect(ui->playButton, &QPushButton::clicked, this, &UserInterfaceManager::playButtonPushed);
     connect(ui->infoButton, &QPushButton::clicked, this, &UserInterfaceManager::infoButtonPushed);
     connect(ui->quitButton, &QPushButton::clicked, this, &UserInterfaceManager::quitButtonPushed);
-    connect(ui->menuButton, &QPushButton::clicked, this, &UserInterfaceManager::menuButtonPushed);
+    connect(ui->endTurnButton, &QPushButton::clicked, this, &UserInterfaceManager::endTurnButtonPushed);
+
+    connect(this, &UserInterfaceManager::endCurrentPlayerTurn,
+            m_gameManager, &GameManager::currentPlayerTurnEnded);
+
+    connect(m_gameManager, &GameManager::currentTurnChanged,
+            this, &UserInterfaceManager::currentTurnChanged);
+    connect(m_gameManager, &GameManager::currentPlayerChanged,
+            this, &UserInterfaceManager::currentPlayerChanged);
 
     this->show();
 }
@@ -58,12 +66,22 @@ void UserInterfaceManager::quitButtonPushed()
     }
 }
 
-void UserInterfaceManager::menuButtonPushed()
+void UserInterfaceManager::endTurnButtonPushed()
 {
-    if (isVisibleAndEnabled(ui->menuButton))
+    if (isVisibleAndEnabled(ui->endTurnButton))
     {
-        ui->stackedWidget->setCurrentIndex(toInt(Page::MENU));
+        emit endCurrentPlayerTurn();
     }
+}
+
+void UserInterfaceManager::currentTurnChanged(int turnNumber)
+{
+    ui->currentTurnLineEdit->setText(QString::number(turnNumber));
+}
+
+void UserInterfaceManager::currentPlayerChanged(int playerNumber)
+{
+    ui->currentPlayerLineEdit->setText(QString::number(playerNumber));
 }
 
 bool UserInterfaceManager::isVisibleAndEnabled(QPushButton* button)

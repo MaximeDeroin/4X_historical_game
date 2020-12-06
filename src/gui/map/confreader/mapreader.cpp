@@ -41,6 +41,16 @@ QVector<MapTile *> MapReader::mapTiles() const
     return m_mapTiles;
 }
 
+int MapReader::mapWidth() const
+{
+    return m_mapWidth;
+}
+
+int MapReader::mapHeight() const
+{
+    return m_mapHeight;
+}
+
 TileConf *MapReader::findTileConf(const QChar& abbreviation, TileConf::Type type)
 {
     QString abbr(abbreviation);

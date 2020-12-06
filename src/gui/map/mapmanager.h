@@ -13,6 +13,10 @@ public:
     QVector<MapTile *> mapTiles() const; //!< Getter of m_mapTiles.
 
 private:
+
+    int m_mapWidth; //!< Width of the map.
+    int m_mapHeight; //!< Height of the map.
+
     QVector<MapTile *> m_mapTiles;
 };
 
