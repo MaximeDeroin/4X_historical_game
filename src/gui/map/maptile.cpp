@@ -104,6 +104,21 @@ void MapTile::addTileBonuses(const TileBonuses &bonusesToAdd)
     }
 }
 
+QString MapTile::backgroundTypeName() const
+{
+    return m_backgroundTileConf->name();
+}
+
+int MapTile::y() const
+{
+    return m_y;
+}
+
+int MapTile::x() const
+{
+    return m_x;
+}
+
 void MapTile::updateToolTip()
 {
     QString toolTip;

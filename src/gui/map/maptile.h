@@ -10,8 +10,6 @@
 class MapTile : public QGraphicsItem
 {
 public:
-//    MapTile(int x, int y, const QImage &tileImage, const QImage &modifierImage = QImage(0,0));
-
     /*!
      * \brief Constructor of the class.
      * \param[in] x Abscissa of the tile.
@@ -45,6 +43,12 @@ public:
      * \return Point composed of m_x and m_y.
      */
     QPointF positionOnMap();
+
+    int x() const;
+
+    int y() const;
+
+    QString backgroundTypeName() const;
 
 protected:
     /*!

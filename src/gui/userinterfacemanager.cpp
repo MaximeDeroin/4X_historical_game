@@ -46,6 +46,8 @@ void UserInterfaceManager::playButtonPushed()
         {
             ui->gameFrame->loadMap(m_gameManager->mapTiles());
             ui->stackedWidget->setCurrentIndex(toInt(Page::GAME));
+
+            m_gameManager->startGame();
         }
     }
 }

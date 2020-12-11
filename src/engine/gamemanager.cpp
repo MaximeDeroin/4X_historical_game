@@ -1,4 +1,5 @@
 #include "gamemanager.h"
+#include <QDebug>
 
 GameManager::GameManager(int playerNumber, QObject *parent):
     QObject(parent),
@@ -38,6 +39,22 @@ bool GameManager::openMap(const QString &filename)
 QVector<MapTile *> GameManager::mapTiles() const
 {
     return m_map->mapTiles();
+}
+
+void GameManager::startGame()
+{
+    QVector<MapTile*> startingPoints = m_map->selectStartingPoints(m_players.size());
+
+    for (MapTile* tile: startingPoints)
+    {
+        qDebug() << "tile position: (" << tile->x() << ", " << tile->y() << ")";
+    }
+    if (startingPoints.size() != m_players.size())
+    {
+        qDebug() << startingPoints.size() << "!=" << m_players.size();
+        return;
+    }
+
 }
 
 void GameManager::currentPlayerTurnEnded()

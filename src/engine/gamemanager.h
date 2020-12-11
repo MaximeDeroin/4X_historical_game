@@ -12,7 +12,12 @@ class GameManager: public QObject
 {
     Q_OBJECT
 public:
-    explicit GameManager(int playerNumber = 1, QObject *parent = nullptr);
+    /*!
+     * \brief Constructor of the class.
+     * \param[in] playerNumber Number of player in the game.
+     * \param[in] parent Parent object.
+     */
+    explicit GameManager(int playerNumber = 3, QObject *parent = nullptr);
 
     virtual ~GameManager(); //!< Default destructor.
 
@@ -24,6 +29,11 @@ public:
     bool openMap(const QString &filename);
 
     QVector<MapTile *> mapTiles() const; //!< Getter of m_mapTiles.
+
+    /*!
+     * \brief Initializes and starts the game.
+     */
+    void startGame();
 
 signals:
     /*!
@@ -45,8 +55,8 @@ public slots:
     void currentPlayerTurnEnded();
 
 private:
-    int MIN_PLAYER = 1;
-    int MAX_PLAYER = 10;
+    int MIN_PLAYER = 1; //!< Minimum number of player.
+    int MAX_PLAYER = 10; //!< Maximum number of player.
     int m_currentTurn; //!< Turn number.
 
     int m_currentPlayer; //!< Index of the current player.
