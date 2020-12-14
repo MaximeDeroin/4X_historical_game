@@ -8,6 +8,7 @@
         <file>../conf/conflocation</file>
         <file>map/island.map</file>
         <file>map/island_1v1.map</file>
+        <file>image/units/settler.png</file>
     </qresource>
     <qresource prefix="/../conf"/>
 </RCC>

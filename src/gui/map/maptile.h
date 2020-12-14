@@ -3,6 +3,7 @@
 
 #include <QGraphicsItem>
 #include "confreader/tileconf.h"
+#include "unit/unit.h"
 
 /*!
  * \brief This class manages a tile on the graphical user interface.
@@ -23,6 +24,12 @@ public:
      * \param[in] tileConf Configuration of the modifier.
      */
     void addModifier(TileConf* tileConf);
+
+    /*!
+     * \brief Sets a unit to the tile.
+     * \param[in] unit Instance of the unit.
+     */
+    void setUnit(Unit* unit);
 
     /*!
      * \brief Gives bounds of the tile, relative to the tile position on the view.
@@ -79,7 +86,7 @@ private:
 
     TileConf* m_backgroundTileConf; //!< Configuration of the background.
     TileConf* m_modifierTileConf; //!< Configuration of the modifier.
-
+    Unit* m_unit; //!< Configuration of the unit.
     TileBonuses m_tileBonuses; //!< Tile bonuses.
 
     /*!

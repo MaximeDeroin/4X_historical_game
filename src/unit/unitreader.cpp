@@ -58,6 +58,11 @@ bool UnitReader::parseUnit(QFile *file, Unit*& unitConf)
                     unitConf->setMaxMovementPoints(movementPoints);
                 }
             }
+            else if (variableName == "image_name")
+            {
+                QString imagePath(UNIT_IMAGE_FOLDER+variableValue);
+                unitConf->setImage(new QImage(imagePath));
+            }
             else if (variableName == "action")
             {
             // else add action

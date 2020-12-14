@@ -23,3 +23,10 @@ void PlayerManager::setStartingPosition(MapTile *statingTile)
 {
 
 }
+
+void PlayerManager::addUnit(Unit *unitType, MapTile *unitPosition)
+{
+    Unit* newUnit = new Unit(*unitType);
+    m_units.push_back(newUnit);
+    unitPosition->setUnit(newUnit);
+}

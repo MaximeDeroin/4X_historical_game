@@ -64,6 +64,8 @@ private:
     QVector<PlayerManager*> m_players; //!< List of players.
     QVector<Unit*> m_possibleUnits; //!< List of possible units.
 
+    QMap<QString, Unit*> m_unitsByName; //!< Dictionnary of units by name.
+
     MapManager* m_map; //!< Map manager.
 };
 

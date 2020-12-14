@@ -21,6 +21,8 @@ public:
 
     void setStartingPosition(MapTile* statingTile);
 
+    void addUnit(Unit* unitType, MapTile* unitPosition);
+
 private:
     int m_playerNumber; //!< Number of the player.
     QVector<Unit*> m_units; //!< List of units.

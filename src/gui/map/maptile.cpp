@@ -11,6 +11,7 @@ MapTile::MapTile(int x, int y, TileConf *tileConf):
     m_selected(false),
     m_backgroundTileConf(tileConf),
     m_modifierTileConf(nullptr),
+    m_unit(nullptr),
     m_tileBonuses()
 {
     addTileBonuses(tileConf->tileBonuses());
@@ -29,6 +30,11 @@ void MapTile::addModifier(TileConf *tileConf)
     this->updateToolTip();
 }
 
+void MapTile::setUnit(Unit *unit)
+{
+    m_unit = unit;
+}
+
 QRectF MapTile::boundingRect() const
 {
     return QRectF(0, 0, TILE_SIZE, TILE_SIZE);
@@ -40,6 +46,7 @@ void MapTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
     Q_UNUSED(widget)
     double TILESIZE(static_cast<double>(TILE_SIZE));
     QRectF target(0.0, 0.0, TILESIZE, TILESIZE);
+    QRectF targetUnit(TILESIZE/4, TILESIZE/4, TILESIZE/2, TILESIZE/2);
 
     if (m_tileImage)
     {
@@ -53,6 +60,14 @@ void MapTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
         QRectF sourceModifier(0.0, 0.0, m_modifierImage->size().width(),  m_modifierImage->size().height());
         if (m_modifierImage->size() != QSize(0,0))
             painter->drawImage(target, *m_modifierImage, sourceModifier);
+    }
+
+    if (m_unit && m_unit->image())
+    {
+        QImage* unitImage = m_unit->image();
+        QRectF sourceModifier(0.0, 0.0, unitImage->size().width(),  unitImage->size().height());
+        if (unitImage->size() != QSize(0,0))
+            painter->drawImage(targetUnit, *unitImage, sourceModifier);
     }
 
     if (m_selected)

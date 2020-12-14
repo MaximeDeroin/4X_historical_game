@@ -23,7 +23,10 @@ GameManager::GameManager(int playerNumber, QObject *parent):
     UnitReader reader;
     bool ok = true;
     m_possibleUnits = reader.readUnitTypes(ok);
-
+    for(Unit* unit: m_possibleUnits)
+    {
+        m_unitsByName[unit->name()] = unit;
+    }
 }
 
 GameManager::~GameManager()
@@ -70,7 +73,8 @@ void GameManager::startGame()
 
     for (int i=0; i<m_players.size(); i++)
     {
-        m_players.at(i)->setStartingPosition(startingPoints.at(i));
+        //m_players.at(i)->setStartingPosition(startingPoints.at(i));
+        m_players.at(i)->addUnit(m_unitsByName["Settler"], startingPoints.at(i));
     }
 
 }

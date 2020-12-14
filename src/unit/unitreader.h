@@ -44,4 +44,7 @@ private:
     QStringList readFileLines(QFile *file);
 };
 
+static QString UNIT_IMAGE_FOLDER = ":/image/units/"; //!< Tile configuration folder.
+
+
 #endif // UNITREADER_H
