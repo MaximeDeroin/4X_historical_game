@@ -33,6 +33,7 @@ void MapTile::addModifier(TileConf *tileConf)
 void MapTile::setUnit(Unit *unit)
 {
     m_unit = unit;
+    this->updateToolTip();
 }
 
 QRectF MapTile::boundingRect() const
@@ -154,6 +155,14 @@ void MapTile::updateToolTip()
         toolTip += "\n";
         toolTip += QString("%1 : %2").arg(TileBonus::bonusName(type))
                                      .arg(m_tileBonuses[type]);
+    }
+
+    if (m_unit)
+    {
+        toolTip += "\n";
+        toolTip += QString("%1: %2/%3 MP").arg(m_unit->name())
+                                            .arg(m_unit->movementPoints())
+                                            .arg(m_unit->maxMovementPoints());
     }
 
     setToolTip(toolTip);

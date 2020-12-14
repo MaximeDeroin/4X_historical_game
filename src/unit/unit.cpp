@@ -34,6 +34,16 @@ void Unit::setImage(QImage *image)
     m_image = image;
 }
 
+int Unit::movementPoints() const
+{
+    return m_movementPoints;
+}
+
+int Unit::maxMovementPoints() const
+{
+    return m_maxMovementPoints;
+}
+
 QString Unit::name() const
 {
     return m_name;

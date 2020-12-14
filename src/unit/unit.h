@@ -15,13 +15,14 @@ public:
     QString name() const;  //!< Getter of m_name.
     void setName(const QString &name); //!< Setter of m_name.
 
+    int movementPoints() const; //!< Getter of m_movementPoints.
     void setMovementPoints(int movementPoints); //!< Setter of m_movementPoints.
 
+    int maxMovementPoints() const; //!< Getter of m_maxMovementPoints.
     void setMaxMovementPoints(int maxMovementPoints); //!< Setter of m_maxMovementPoints.
 
     QImage *image() const; //!< Getter of m_image.
     void setImage(QImage *image); //!< Setter of m_image.
-
 
 private:
     QString m_name;
