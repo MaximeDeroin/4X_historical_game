@@ -12,7 +12,7 @@ MapReader::MapReader(const QString &filename, bool &success):
 {
     success = true;
 
-    success &= TileConfReader::ReadAllTileConfigurations(m_tilesConf, m_resourcesConf);
+    success &= TileConfReader::readAllTileConfigurations(m_tilesConf, m_resourcesConf);
 
     if (!success)
     {

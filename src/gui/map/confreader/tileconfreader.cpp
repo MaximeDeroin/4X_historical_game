@@ -6,7 +6,7 @@ TileConfReader::TileConfReader()
 
 }
 
-bool TileConfReader::ReadAllTileConfigurations(QVector<TileConf*> &tilesConf,
+bool TileConfReader::readAllTileConfigurations(QVector<TileConf*> &tilesConf,
                                                QVector<TileConf*> &resourcesConf)
 {
     QDir confFolder("../../conf/");

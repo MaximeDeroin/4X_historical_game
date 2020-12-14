@@ -21,7 +21,7 @@ public:
      * \param[out] resourcesConf Tile configurations for resource tiles.
      * \return True is no error was detected.
      */
-    static bool ReadAllTileConfigurations(QVector<TileConf *> &tilesConf,
+    static bool readAllTileConfigurations(QVector<TileConf *> &tilesConf,
                                    QVector<TileConf *> &resourcesConf);
 
     QVector<TileConf *> tilesConf() const; //!< Getter of m_tilesConf.

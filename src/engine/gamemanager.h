@@ -62,6 +62,7 @@ private:
     int m_currentPlayer; //!< Index of the current player.
 
     QVector<PlayerManager*> m_players; //!< List of players.
+    QVector<Unit*> m_possibleUnits; //!< List of possible units.
 
     MapManager* m_map; //!< Map manager.
 };

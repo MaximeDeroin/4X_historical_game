@@ -7,3 +7,18 @@ Unit::Unit():
 {
 
 }
+
+void Unit::setName(const QString &name)
+{
+    m_name = name;
+}
+
+void Unit::setMovementPoints(int movementPoints)
+{
+    m_movementPoints = movementPoints;
+}
+
+void Unit::setMaxMovementPoints(int maxMovementPoints)
+{
+    m_maxMovementPoints = maxMovementPoints;
+}

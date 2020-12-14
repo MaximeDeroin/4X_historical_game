@@ -18,3 +18,8 @@ PlayerManager::~PlayerManager()
         delete city;
     }
 }
+
+void PlayerManager::setStartingPosition(MapTile *statingTile)
+{
+
+}

@@ -1,10 +1,12 @@
 #include "gamemanager.h"
 #include <QDebug>
+#include "unit/unitreader.h"
 
 GameManager::GameManager(int playerNumber, QObject *parent):
     QObject(parent),
     m_currentTurn(0),
     m_currentPlayer(0),
+    m_possibleUnits(),
     m_map(new MapManager)
 {
     if (playerNumber < MIN_PLAYER)
@@ -17,6 +19,11 @@ GameManager::GameManager(int playerNumber, QObject *parent):
     {
         m_players.push_back(new PlayerManager(i+1));
     }
+
+    UnitReader reader;
+    bool ok = true;
+    m_possibleUnits = reader.readUnitTypes(ok);
+
 }
 
 GameManager::~GameManager()
@@ -25,6 +32,12 @@ GameManager::~GameManager()
     {
         delete player;
     }
+
+    for (Unit* unit: m_possibleUnits)
+    {
+        delete unit;
+    }
+
     if (m_map)
     {
         delete m_map;
@@ -53,6 +66,11 @@ void GameManager::startGame()
     {
         qDebug() << startingPoints.size() << "!=" << m_players.size();
         return;
+    }
+
+    for (int i=0; i<m_players.size(); i++)
+    {
+        m_players.at(i)->setStartingPosition(startingPoints.at(i));
     }
 
 }

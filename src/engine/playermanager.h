@@ -3,6 +3,7 @@
 
 #include "../city/city.h"
 #include "../unit/unit.h"
+#include "../gui/map/maptile.h"
 
 /*!
  * \brief Stores information of a player.
@@ -10,14 +11,20 @@
 class PlayerManager
 {
 public:
+    /*!
+     * \brief Constructor of the class.
+     * \param[in] playerNumber Number of the player.
+     */
     explicit PlayerManager(int playerNumber);
 
-    ~PlayerManager();
+    ~PlayerManager(); //!< Default destructor.
+
+    void setStartingPosition(MapTile* statingTile);
 
 private:
-    int m_playerNumber;
-    QVector<Unit*> m_units; //!< List of units;
-    QVector<City*> m_cities; //!< List of cities;
+    int m_playerNumber; //!< Number of the player.
+    QVector<Unit*> m_units; //!< List of units.
+    QVector<City*> m_cities; //!< List of cities.
 };
 
 #endif // PLAYERMANAGER_H
