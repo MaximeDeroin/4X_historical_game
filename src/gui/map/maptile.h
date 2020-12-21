@@ -1,15 +1,16 @@
 #ifndef MAPTILE_H
 #define MAPTILE_H
 
-#include <QGraphicsItem>
+#include <QGraphicsObject>
 #include "confreader/tileconf.h"
 #include "unit/unit.h"
 
 /*!
  * \brief This class manages a tile on the graphical user interface.
  */
-class MapTile : public QGraphicsItem
+class MapTile : public QGraphicsObject//, public QGraphicsItem
 {
+    Q_OBJECT
 public:
     /*!
      * \brief Constructor of the class.
@@ -18,6 +19,8 @@ public:
      * \param[in] tileConf Tile type configuration.
      */
     explicit MapTile(int x, int y, TileConf* tileConf);
+
+    virtual ~MapTile() = default;
 
     /*!
      * \brief Adds a modifier(resource) to the tile.
@@ -56,6 +59,12 @@ public:
     int y() const;
 
     QString backgroundTypeName() const;
+
+    void setSelected(bool selected);
+
+signals:
+    void tilePressed();
+    void tileReleased();
 
 protected:
     /*!

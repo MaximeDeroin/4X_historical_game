@@ -91,16 +91,19 @@ QPointF MapTile::positionOnMap()
 
 void MapTile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    QGraphicsItem::mousePressEvent(event);
+    qDebug() << m_x << ", " << m_y << "pressed ";
+    //QGraphicsItem::mousePressEvent(event);
     update();
+    emit tilePressed();
 }
 
 void MapTile::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << m_x << ", " << m_y << "pressed ";
-    QGraphicsItem::mouseReleaseEvent(event);
-    m_selected = !m_selected;
+    qDebug() << m_x << ", " << m_y << "released ";
+    //QGraphicsItem::mouseReleaseEvent(event);
+//    m_selected = !m_selected;
     update();
+    emit tileReleased();
 }
 
 void MapTile::addTileBonuses(const TileBonuses &bonusesToAdd)
@@ -123,6 +126,12 @@ void MapTile::addTileBonuses(const TileBonuses &bonusesToAdd)
 QString MapTile::backgroundTypeName() const
 {
     return m_backgroundTileConf->name();
+}
+
+void MapTile::setSelected(bool selected)
+{
+    m_selected = selected;
+    update();
 }
 
 int MapTile::y() const

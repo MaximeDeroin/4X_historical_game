@@ -7,7 +7,9 @@
 #include <QDebug>
 
 MapView::MapView(QWidget *parent)
-    : QFrame(parent)
+    : QFrame(parent),
+      m_currentTilePressed(nullptr),
+      m_currentlySelectedTile(nullptr)
 {
     m_zoomLevel = DEFAULT_ZOOM_LEVEL;
     setFrameStyle(Sunken | StyledPanel);
@@ -36,6 +38,33 @@ void MapView::applyZoomLevel()
     m_graphicsView->setMatrix(matrix);
 }
 
+void MapView::onTilePressed()
+{
+    m_currentTilePressed = dynamic_cast<MapTile*>(sender());
+}
+
+void MapView::onTileReleased()
+{
+    MapTile* releasedTile = dynamic_cast<MapTile*>(sender());
+    if (releasedTile != nullptr && releasedTile == m_currentTilePressed)
+    {
+        if (m_currentlySelectedTile && m_currentlySelectedTile == releasedTile)
+        {
+            m_currentlySelectedTile->setSelected(false);
+            m_currentlySelectedTile = nullptr;
+        }
+        else
+        {
+            if (m_currentlySelectedTile)
+            {
+                m_currentlySelectedTile->setSelected(false);
+            }
+            m_currentlySelectedTile = releasedTile;
+            releasedTile->setSelected(true);
+        }
+    }
+}
+
 void MapView::createScene(const QVector<MapTile *>& mapTiles)
 {
     m_scene = new QGraphicsScene(this);
@@ -44,6 +73,9 @@ void MapView::createScene(const QVector<MapTile *>& mapTiles)
     {
         tile->setPos(tile->positionOnMap());
         m_scene->addItem(tile);
+
+        connect(tile, &MapTile::tilePressed, this, &MapView::onTilePressed);
+        connect(tile, &MapTile::tileReleased, this, &MapView::onTileReleased);
     }
     m_graphicsView->setScene(m_scene);
 

@@ -73,6 +73,9 @@ private slots:
      */
     void applyZoomLevel();
 
+    void onTilePressed();
+    void onTileReleased();
+
 private:
     MapGraphicsView *m_graphicsView; //!< Scene container.
 
@@ -83,6 +86,9 @@ private:
     int DEFAULT_ZOOM_LEVEL = 180; //!< Default zoom level.
     int MIN_ZOOM_LEVEL = 140; //!< Lower limit for zoom level.
     int MAX_ZOOM_LEVEL = 280; //!< Upper limit for zoom level.
+
+    MapTile* m_currentTilePressed;
+    MapTile* m_currentlySelectedTile;
 
     /*!
      * \brief Creates the scene with elements described in the map file.
