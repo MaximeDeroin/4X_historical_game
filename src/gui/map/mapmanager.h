@@ -1,15 +1,19 @@
 #ifndef MAPMANAGER_H
 #define MAPMANAGER_H
 
+#include <QObject>
 #include "confreader/mapreader.h"
 
 /*!
  * \brief Manages the map of the game.
  */
-class MapManager
+class MapManager : public QObject
 {
+    Q_OBJECT
 public:
-    MapManager();
+    MapManager(); //!< Default constructor.
+
+    ~MapManager() = default; //!< Default destructor.
 
     /*!
      * \brief Opens a map file.
@@ -36,17 +40,50 @@ public:
      */
     int distance(MapTile* first, MapTile* second);
 
+private slots:
+    /*!
+     * \brief Triggered by a tile pressed.
+     */
+    void onTilePressed();
+
+    /*!
+     * \brief Triggered by a tile released.
+     */
+    void onTileReleased();
+
+    /*!
+     * \brief Triggered by the selection of a unit.
+     * \param[in] unit Unit selected.
+     */
+    void onUnitSelected(Unit* unit);
+
+    /*!
+     * \brief Triggered by the end of selection of a unit.
+     */
+    void onUnitUnselected();
+
 private:
     int m_mapWidth; //!< Width of the map.
     int m_mapHeight; //!< Height of the map.
 
+    MapTile* m_currentTilePressed;
+    MapTile* m_currentlySelectedTile;
+
     QVector<MapTile *> m_mapTiles; //!< List of map tiles.
+
+    /*!
+     * \brief Establishes signal connections between map tiles and the map manager.
+     */
+    void connectMapTiles();
 
     /*!
      * \brief Selects map tiles where a player can start.
      * \return Vector of tiles where the player can start.
      */
     QVector<MapTile *> potentialStartingTiles();
+    void setCanBeReached(int x, int y, bool canBeReached);
+    bool isInMap(int x, int y);
+    void setNeighborsCanBeReached(int x, int y, bool canBeReached);
 };
 
 #endif // MAPMANAGER_H

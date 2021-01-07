@@ -73,8 +73,21 @@ private slots:
      */
     void applyZoomLevel();
 
-    void onTilePressed();
-    void onTileReleased();
+//    /*!
+//     * \brief Triggered by a tile pressed.
+//     */
+//    void onTilePressed();
+
+//    /*!
+//     * \brief Triggered by a tile released.
+//     */
+//    void onTileReleased();
+
+//    /*!
+//     * \brief Triggered by the selection of a unit.
+//     * \param[in] unit Unit selected.
+//     */
+//    void onUnitSelected(Unit* unit);
 
 private:
     MapGraphicsView *m_graphicsView; //!< Scene container.
@@ -87,8 +100,8 @@ private:
     int MIN_ZOOM_LEVEL = 140; //!< Lower limit for zoom level.
     int MAX_ZOOM_LEVEL = 280; //!< Upper limit for zoom level.
 
-    MapTile* m_currentTilePressed;
-    MapTile* m_currentlySelectedTile;
+//    MapTile* m_currentTilePressed;
+//    MapTile* m_currentlySelectedTile;
 
     /*!
      * \brief Creates the scene with elements described in the map file.

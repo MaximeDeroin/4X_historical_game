@@ -9,6 +9,7 @@ MapTile::MapTile(int x, int y, TileConf *tileConf):
     m_tileImage(tileConf->image()),
     m_modifierImage(nullptr),
     m_selected(false),
+    m_canBeReached(false),
     m_backgroundTileConf(tileConf),
     m_modifierTileConf(nullptr),
     m_unit(nullptr),
@@ -82,6 +83,18 @@ void MapTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
         painter->drawLine(TILESIZE-MARGIN, TILESIZE-MARGIN, MARGIN, TILESIZE-MARGIN);
         painter->drawLine(MARGIN, TILESIZE-MARGIN, MARGIN, MARGIN);
     }
+
+    if (m_canBeReached)
+    {
+        double MARGIN = TILESIZE/20;
+        QPen pen(Qt::darkRed, TILESIZE/40, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin);
+        painter->setPen(pen);
+
+        painter->drawLine(MARGIN, MARGIN, TILESIZE-MARGIN, MARGIN);
+        painter->drawLine(TILESIZE-MARGIN, MARGIN, TILESIZE-MARGIN, TILESIZE-MARGIN);
+        painter->drawLine(TILESIZE-MARGIN, TILESIZE-MARGIN, MARGIN, TILESIZE-MARGIN);
+        painter->drawLine(MARGIN, TILESIZE-MARGIN, MARGIN, MARGIN);
+    }
 }
 
 QPointF MapTile::positionOnMap()
@@ -123,6 +136,17 @@ void MapTile::addTileBonuses(const TileBonuses &bonusesToAdd)
     }
 }
 
+bool MapTile::canBeReached() const
+{
+    return m_canBeReached;
+}
+
+void MapTile::setCanBeReached(bool canBeReached)
+{
+    m_canBeReached = canBeReached;
+    update();
+}
+
 QString MapTile::backgroundTypeName() const
 {
     return m_backgroundTileConf->name();
@@ -131,6 +155,14 @@ QString MapTile::backgroundTypeName() const
 void MapTile::setSelected(bool selected)
 {
     m_selected = selected;
+    if (selected && m_unit)
+    {
+        emit unitSelected(m_unit);
+    }
+    else if (!selected && m_unit)
+    {
+        emit unitUnselected();
+    }
     update();
 }
 

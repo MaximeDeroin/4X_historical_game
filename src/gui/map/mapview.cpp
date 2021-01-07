@@ -7,9 +7,7 @@
 #include <QDebug>
 
 MapView::MapView(QWidget *parent)
-    : QFrame(parent),
-      m_currentTilePressed(nullptr),
-      m_currentlySelectedTile(nullptr)
+    : QFrame(parent)
 {
     m_zoomLevel = DEFAULT_ZOOM_LEVEL;
     setFrameStyle(Sunken | StyledPanel);
@@ -25,7 +23,6 @@ void MapView::loadMap(const QVector<MapTile *> &mapTiles)
     topLayout->addWidget(m_graphicsView, 0, 0);
     setLayout(topLayout);
     this->applyZoomLevel();
-
 }
 
 void MapView::applyZoomLevel()
@@ -38,32 +35,42 @@ void MapView::applyZoomLevel()
     m_graphicsView->setMatrix(matrix);
 }
 
-void MapView::onTilePressed()
-{
-    m_currentTilePressed = dynamic_cast<MapTile*>(sender());
-}
+//void MapView::onTilePressed()
+//{
+//    m_currentTilePressed = dynamic_cast<MapTile*>(sender());
+//}
 
-void MapView::onTileReleased()
-{
-    MapTile* releasedTile = dynamic_cast<MapTile*>(sender());
-    if (releasedTile != nullptr && releasedTile == m_currentTilePressed)
-    {
-        if (m_currentlySelectedTile && m_currentlySelectedTile == releasedTile)
-        {
-            m_currentlySelectedTile->setSelected(false);
-            m_currentlySelectedTile = nullptr;
-        }
-        else
-        {
-            if (m_currentlySelectedTile)
-            {
-                m_currentlySelectedTile->setSelected(false);
-            }
-            m_currentlySelectedTile = releasedTile;
-            releasedTile->setSelected(true);
-        }
-    }
-}
+//void MapView::onTileReleased()
+//{
+//    MapTile* releasedTile = dynamic_cast<MapTile*>(sender());
+//    if (releasedTile != nullptr && releasedTile == m_currentTilePressed)
+//    {
+//        if (m_currentlySelectedTile && m_currentlySelectedTile == releasedTile)
+//        {
+//            m_currentlySelectedTile->setSelected(false);
+//            m_currentlySelectedTile = nullptr;
+//        }
+//        else
+//        {
+//            if (m_currentlySelectedTile)
+//            {
+//                m_currentlySelectedTile->setSelected(false);
+//            }
+//            m_currentlySelectedTile = releasedTile;
+//            releasedTile->setSelected(true);
+//        }
+//    }
+//}
+
+//void MapView::onUnitSelected(Unit *unit)
+//{
+//    int movementPoints = unit->movementPoints();
+//    if (movementPoints > 0)
+//    {
+//        MapTile* selectedTile = static_cast<MapTile*>(sender());
+
+//    }
+//}
 
 void MapView::createScene(const QVector<MapTile *>& mapTiles)
 {
@@ -73,9 +80,6 @@ void MapView::createScene(const QVector<MapTile *>& mapTiles)
     {
         tile->setPos(tile->positionOnMap());
         m_scene->addItem(tile);
-
-        connect(tile, &MapTile::tilePressed, this, &MapView::onTilePressed);
-        connect(tile, &MapTile::tileReleased, this, &MapView::onTileReleased);
     }
     m_graphicsView->setScene(m_scene);
 

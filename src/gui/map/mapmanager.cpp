@@ -3,6 +3,7 @@
 #include <ctime>
 
 MapManager::MapManager():
+    m_currentlySelectedTile(nullptr),
     m_mapTiles()
 {
 
@@ -16,6 +17,8 @@ bool MapManager::openMap(const QString &filename)
     if (mapReadSucessfully)
     {
         m_mapTiles = reader.mapTiles();
+        this->connectMapTiles();
+
         m_mapWidth = reader.mapWidth();
         m_mapHeight = reader.mapHeight();
     }
@@ -26,6 +29,18 @@ bool MapManager::openMap(const QString &filename)
         messageBox.exec();
     }
     return mapReadSucessfully;
+}
+
+void MapManager::connectMapTiles()
+{
+    for (MapTile* tile: m_mapTiles)
+    {
+        connect(tile, &MapTile::tilePressed, this, &MapManager::onTilePressed);
+        connect(tile, &MapTile::tileReleased, this, &MapManager::onTileReleased);
+
+        connect(tile, &MapTile::unitSelected, this, &MapManager::onUnitSelected);
+        connect(tile, &MapTile::unitUnselected, this, &MapManager::onUnitUnselected);
+    }
 }
 
 QVector<MapTile *> MapManager::mapTiles() const
@@ -92,4 +107,76 @@ QVector<MapTile *> MapManager::potentialStartingTiles()
         }
     }
     return potentialStartingTiles;
+}
+
+void MapManager::onTilePressed()
+{
+    m_currentTilePressed = dynamic_cast<MapTile*>(sender());
+}
+
+void MapManager::onTileReleased()
+{
+    MapTile* releasedTile = dynamic_cast<MapTile*>(sender());
+    if (releasedTile != nullptr && releasedTile == m_currentTilePressed)
+    {
+        if (m_currentlySelectedTile && (m_currentlySelectedTile == releasedTile))
+        {
+            m_currentlySelectedTile->setSelected(false);
+            m_currentlySelectedTile = nullptr;
+        }
+        else
+        {
+            if (m_currentlySelectedTile)
+            {
+                m_currentlySelectedTile->setSelected(false);
+            }
+            m_currentlySelectedTile = releasedTile;
+            releasedTile->setSelected(true);
+        }
+    }
+}
+
+void MapManager::onUnitSelected(Unit *unit)
+{
+    int movementPoints = unit->movementPoints();
+    if (movementPoints > 0)
+    {
+        MapTile* selectedTile = static_cast<MapTile*>(sender());
+        int x = selectedTile->x();
+        int y = selectedTile->y();
+        setNeighborsCanBeReached(x, y , true);
+    }
+}
+
+void MapManager::onUnitUnselected()
+{
+    MapTile* selectedTile = static_cast<MapTile*>(sender());
+    int x = selectedTile->x();
+    int y = selectedTile->y();
+    setNeighborsCanBeReached(x, y , false);
+}
+
+void MapManager::setNeighborsCanBeReached(int x, int y, bool canBeReached)
+{
+    setCanBeReached(x-1, y-1, canBeReached);
+    setCanBeReached(x-1, y, canBeReached);
+    setCanBeReached(x-1, y+1, canBeReached);
+    setCanBeReached(x, y-1, canBeReached);
+    setCanBeReached(x, y+1, canBeReached);
+    setCanBeReached(x+1, y-1, canBeReached);
+    setCanBeReached(x+1, y, canBeReached);
+    setCanBeReached(x+1, y+1, canBeReached);
+}
+
+void MapManager::setCanBeReached(int x, int y, bool canBeReached)
+{
+    if (isInMap(x,y))
+    {
+        m_mapTiles.at(y*m_mapWidth+x)->setCanBeReached(canBeReached);
+    }
+}
+
+bool MapManager::isInMap(int x, int y)
+{
+    return ((x >= 0) && (y >= 0) && (x < m_mapWidth) && (y < m_mapHeight));
 }

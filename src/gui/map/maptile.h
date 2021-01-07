@@ -54,17 +54,39 @@ public:
      */
     QPointF positionOnMap();
 
-    int x() const;
+    int x() const; //!< Getter of m_x.
 
-    int y() const;
+    int y() const; //!< Getter of m_y.
 
-    QString backgroundTypeName() const;
+    QString backgroundTypeName() const; //!< Returns name of background tile configuration.
 
-    void setSelected(bool selected);
+    void setSelected(bool selected); //!< Setter of m_selected.
+
+    bool canBeReached() const; //!< Getter of m_canBeReached.
+    void setCanBeReached(bool canBeReached); //!< Setter of m_canBeReached.
 
 signals:
+    /*!
+     * \brief Indicates that the tile has been pressed.
+     */
     void tilePressed();
+
+    /*!
+     * \brief Indicates that the tile has been released.
+     */
     void tileReleased();
+
+    /*!
+     * \brief Indicates that the current selected tile contains a unit.
+     * \param[in] unit Unit selected.
+     */
+    void unitSelected(Unit* unit);
+
+    /*!
+     * \brief Indicated that the previously selected tile contains a unit.
+     * \param[in] unit Unit selected.
+     */
+    void unitUnselected();
 
 protected:
     /*!
@@ -91,7 +113,9 @@ private:
     int TILE_SIZE = 200; //!< Size of a tile in pixel.
     QImage* m_tileImage; //!< Image of the background of the tile.
     QImage* m_modifierImage; //!< Image of the tile modifier.
-    bool m_selected; //!< indicates if the tile was selected.
+
+    bool m_selected; //!< Indicates if the tile was selected.
+    bool m_canBeReached; //!< Indicates if the selected unit can move to this tile.
 
     TileConf* m_backgroundTileConf; //!< Configuration of the background.
     TileConf* m_modifierTileConf; //!< Configuration of the modifier.
