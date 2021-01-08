@@ -104,7 +104,7 @@ QPointF MapTile::positionOnMap()
 
 void MapTile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << m_x << ", " << m_y << "pressed ";
+    //qDebug() << m_x << ", " << m_y << "pressed ";
     //QGraphicsItem::mousePressEvent(event);
     update();
     emit tilePressed();
@@ -134,6 +134,11 @@ void MapTile::addTileBonuses(const TileBonuses &bonusesToAdd)
             m_tileBonuses[type] = bonusesToAdd[type];
         }
     }
+}
+
+Unit *MapTile::unit() const
+{
+    return m_unit;
 }
 
 bool MapTile::canBeReached() const

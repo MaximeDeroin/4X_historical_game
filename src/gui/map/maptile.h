@@ -28,6 +28,8 @@ public:
      */
     void addModifier(TileConf* tileConf);
 
+    Unit *unit() const; //!< Getter of m_unit.
+
     /*!
      * \brief Sets a unit to the tile.
      * \param[in] unit Instance of the unit.

@@ -1,10 +1,12 @@
 #include "mapmanager.h"
 #include <QMessageBox>
 #include <ctime>
+#include <QDebug>
 
 MapManager::MapManager():
     m_currentlySelectedTile(nullptr),
-    m_mapTiles()
+    m_mapTiles(),
+    m_highlightedCanBeReached()
 {
 
 }
@@ -119,6 +121,7 @@ void MapManager::onTileReleased()
     MapTile* releasedTile = dynamic_cast<MapTile*>(sender());
     if (releasedTile != nullptr && releasedTile == m_currentTilePressed)
     {
+        // click on selected tile unselects it
         if (m_currentlySelectedTile && (m_currentlySelectedTile == releasedTile))
         {
             m_currentlySelectedTile->setSelected(false);
@@ -126,6 +129,12 @@ void MapManager::onTileReleased()
         }
         else
         {
+            // Move unit if selected tile can be reached by currently selected unit
+            if (releasedTile->canBeReached())
+            {
+                moveUnit(m_currentlySelectedTile, releasedTile);
+            }
+            // click on another tile : unselect previoulsy selected
             if (m_currentlySelectedTile)
             {
                 m_currentlySelectedTile->setSelected(false);
@@ -158,25 +167,69 @@ void MapManager::onUnitUnselected()
 
 void MapManager::setNeighborsCanBeReached(int x, int y, bool canBeReached)
 {
-    setCanBeReached(x-1, y-1, canBeReached);
-    setCanBeReached(x-1, y, canBeReached);
-    setCanBeReached(x-1, y+1, canBeReached);
-    setCanBeReached(x, y-1, canBeReached);
-    setCanBeReached(x, y+1, canBeReached);
-    setCanBeReached(x+1, y-1, canBeReached);
-    setCanBeReached(x+1, y, canBeReached);
-    setCanBeReached(x+1, y+1, canBeReached);
+    if (canBeReached)
+    {
+        setCanBeReached(x-1, y-1, canBeReached);
+        setCanBeReached(x-1, y, canBeReached);
+        setCanBeReached(x-1, y+1, canBeReached);
+        setCanBeReached(x, y-1, canBeReached);
+        setCanBeReached(x, y+1, canBeReached);
+        setCanBeReached(x+1, y-1, canBeReached);
+        setCanBeReached(x+1, y, canBeReached);
+        setCanBeReached(x+1, y+1, canBeReached);
+    }
+    else
+    {
+        clearHighlightedCanBeReachedTiles();
+    }
+}
+
+void MapManager::clearHighlightedCanBeReachedTiles()
+{
+    for (MapTile* tile: m_highlightedCanBeReached)
+    {
+        tile->setCanBeReached(false);
+    }
+    m_highlightedCanBeReached.clear();
 }
 
 void MapManager::setCanBeReached(int x, int y, bool canBeReached)
 {
     if (isInMap(x,y))
     {
-        m_mapTiles.at(y*m_mapWidth+x)->setCanBeReached(canBeReached);
+        MapTile* tileToHighlight = m_mapTiles.at(y*m_mapWidth+x);
+        tileToHighlight->setCanBeReached(canBeReached);
+        if (canBeReached)
+        {
+            m_highlightedCanBeReached.push_back(tileToHighlight);
+        }
     }
 }
 
 bool MapManager::isInMap(int x, int y)
 {
     return ((x >= 0) && (y >= 0) && (x < m_mapWidth) && (y < m_mapHeight));
+}
+
+void MapManager::moveUnit(MapTile* origin, MapTile* destination)
+{
+    if (!origin || !destination || !(origin->unit()))
+    {
+        qDebug() << "invalid move unit requested";
+        return;
+    }
+
+    // cannot move to a tile occupied by another unit
+    if (destination->unit() == nullptr)
+    {
+        Unit* unit = origin->unit();
+        int dist = distance(origin, destination);
+        if (unit->movementPoints() >= dist)
+        {
+            unit->setMovementPoints(unit->movementPoints() - dist);
+            origin->setUnit(nullptr);
+            destination->setUnit(unit);
+            clearHighlightedCanBeReachedTiles();
+        }
+    }
 }

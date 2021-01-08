@@ -70,6 +70,7 @@ private:
     MapTile* m_currentlySelectedTile;
 
     QVector<MapTile *> m_mapTiles; //!< List of map tiles.
+    QVector<MapTile *> m_highlightedCanBeReached;
 
     /*!
      * \brief Establishes signal connections between map tiles and the map manager.
@@ -81,9 +82,19 @@ private:
      * \return Vector of tiles where the player can start.
      */
     QVector<MapTile *> potentialStartingTiles();
+
+
     void setCanBeReached(int x, int y, bool canBeReached);
+
+
     bool isInMap(int x, int y);
+
+
     void setNeighborsCanBeReached(int x, int y, bool canBeReached);
+
+
+    void moveUnit(MapTile *origin, MapTile *destination);
+    void clearHighlightedCanBeReachedTiles();
 };
 
 #endif // MAPMANAGER_H
