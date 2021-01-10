@@ -24,10 +24,14 @@ public:
     QImage *image() const; //!< Getter of m_image.
     void setImage(QImage *image); //!< Setter of m_image.
 
+    int playerNumber() const; //!< Getter of m_playerNumber.
+    void setPlayerNumber(int playerNumber); //!< Setter of m_playerNumber.
+
 private:
-    QString m_name;
-    int m_movementPoints;
-    int m_maxMovementPoints;
+    QString m_name; //!< Name of the unit.
+    int m_playerNumber; //!< Player number who owns the unit.
+    int m_movementPoints; //!< Number of current movement points left.
+    int m_maxMovementPoints; //!< Maximum number of movement points.
     QImage* m_image; //!< Image of the unit.
 };
 

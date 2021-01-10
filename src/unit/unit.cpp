@@ -2,6 +2,7 @@
 
 Unit::Unit():
     m_name("Unit"),
+    m_playerNumber(-1),
     m_movementPoints(1),
     m_maxMovementPoints(1),
     m_image(nullptr)
@@ -32,6 +33,16 @@ QImage *Unit::image() const
 void Unit::setImage(QImage *image)
 {
     m_image = image;
+}
+
+void Unit::setPlayerNumber(int playerNumber)
+{
+    m_playerNumber = playerNumber;
+}
+
+int Unit::playerNumber() const
+{
+    return m_playerNumber;
 }
 
 int Unit::movementPoints() const

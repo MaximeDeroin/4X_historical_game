@@ -19,6 +19,10 @@ public:
 
     ~PlayerManager(); //!< Default destructor.
 
+    /*!
+     * \brief Sets starting tile position of the player.
+     * \param[in] statingTile Starting tile position of the player
+     */
     void setStartingPosition(MapTile* statingTile);
 
     void addUnit(Unit* unitType, MapTile* unitPosition);

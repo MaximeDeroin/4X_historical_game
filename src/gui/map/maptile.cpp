@@ -206,7 +206,8 @@ void MapTile::updateToolTip()
     if (m_unit)
     {
         toolTip += "\n";
-        toolTip += QString("%1: %2/%3 MP").arg(m_unit->name())
+        toolTip += QString("%1 (player %2): %3/%4 MP").arg(m_unit->name())
+                                            .arg(m_unit->playerNumber())
                                             .arg(m_unit->movementPoints())
                                             .arg(m_unit->maxMovementPoints());
     }
