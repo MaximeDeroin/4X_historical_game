@@ -66,11 +66,12 @@ private:
     int m_mapWidth; //!< Width of the map.
     int m_mapHeight; //!< Height of the map.
 
-    MapTile* m_currentTilePressed;
-    MapTile* m_currentlySelectedTile;
+    MapTile* m_currentTilePressed; //!< @todo see if useful
+    MapTile* m_currentlySelectedTile; //!< @todo see if useful
 
     QVector<MapTile *> m_mapTiles; //!< List of map tiles.
-    QVector<MapTile *> m_highlightedCanBeReached;
+    QVector<MapTile *> m_highlightedCanBeReached; //!< Tiles highlighted has
+                                                  //!< reachable by selected unit.
 
     /*!
      * \brief Establishes signal connections between map tiles and the map manager.
@@ -83,17 +84,40 @@ private:
      */
     QVector<MapTile *> potentialStartingTiles();
 
-
+    /*!
+     * \brief Helper function that sets canBeReached to the tile at the (x,y) position.
+     * \param[in] x Row number of the tile.
+     * \param[in] y Column number of the tile.
+     * \param[in] canBeReached Value to set.
+     */
     void setCanBeReached(int x, int y, bool canBeReached);
 
-
+    /*!
+     * \brief Indicates if the tile at (x,y) position is in the map.
+     * \param[in] x Row number of the tile.
+     * \param[in] y Column number of the tile.
+     * \return True if x (resp y) is positive and less than the map width (resp height).
+     */
     bool isInMap(int x, int y);
 
-
+    /*!
+     * \brief Set canBeReached to all the neighbors of the tile at the (x,y) position.
+     * \param[in] x Row number of the tile.
+     * \param[in] y Column number of the tile.
+     * \param[in] canBeReached Value to set.
+     */
     void setNeighborsCanBeReached(int x, int y, bool canBeReached);
 
-
+    /*!
+     * \brief Moves a unit from a tile to another if the destination does not contain a unit.
+     * \param[in] origin Origin tile.
+     * \param[in] destination Destination tile.
+     */
     void moveUnit(MapTile *origin, MapTile *destination);
+
+    /*!
+     * \brief Remove all tiles from tiles highlighted has reachable by selected unit.
+     */
     void clearHighlightedCanBeReachedTiles();
 };
 
