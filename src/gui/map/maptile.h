@@ -67,6 +67,8 @@ public:
     bool canBeReached() const; //!< Getter of m_canBeReached.
     void setCanBeReached(bool canBeReached); //!< Setter of m_canBeReached.
 
+    bool isGround(); //!< Indicates if the tile is a ground tile.
+
 signals:
     /*!
      * \brief Indicates that the tile has been pressed.

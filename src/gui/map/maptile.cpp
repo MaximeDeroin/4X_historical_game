@@ -181,6 +181,11 @@ int MapTile::x() const
     return m_x;
 }
 
+bool MapTile::isGround()
+{
+    return m_backgroundTileConf->isGround();
+}
+
 void MapTile::updateToolTip()
 {
     QString toolTip;

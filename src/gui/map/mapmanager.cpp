@@ -169,14 +169,10 @@ void MapManager::setNeighborsCanBeReached(int x, int y, bool canBeReached)
 {
     if (canBeReached)
     {
-        setCanBeReached(x-1, y-1, canBeReached);
         setCanBeReached(x-1, y, canBeReached);
-        setCanBeReached(x-1, y+1, canBeReached);
         setCanBeReached(x, y-1, canBeReached);
         setCanBeReached(x, y+1, canBeReached);
-        setCanBeReached(x+1, y-1, canBeReached);
         setCanBeReached(x+1, y, canBeReached);
-        setCanBeReached(x+1, y+1, canBeReached);
     }
     else
     {
@@ -195,7 +191,7 @@ void MapManager::clearHighlightedCanBeReachedTiles()
 
 void MapManager::setCanBeReached(int x, int y, bool canBeReached)
 {
-    if (isInMap(x,y))
+    if (isInMap(x,y) && m_mapTiles.at(y*m_mapWidth+x)->isGround())
     {
         MapTile* tileToHighlight = m_mapTiles.at(y*m_mapWidth+x);
         tileToHighlight->setCanBeReached(canBeReached);

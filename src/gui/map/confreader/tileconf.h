@@ -44,6 +44,8 @@ public:
 
     TileBonuses tileBonuses() const; //!< Getter of m_tileBonuses.
 
+    bool isGround(); //!< Indicates if the tile is a ground tile.
+
 private:
     TileConf::Type m_type; //!< Tile category.
 

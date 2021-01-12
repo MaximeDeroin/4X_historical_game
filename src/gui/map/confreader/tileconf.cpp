@@ -29,6 +29,11 @@ QString TileConf::name() const
     return m_name;
 }
 
+bool TileConf::isGround()
+{
+    return (m_name != "Water");
+}
+
 QMap<TileBonus::Type, int> TileConf::tileBonuses() const
 {
     return m_tileBonuses;
