@@ -40,6 +40,16 @@ void Unit::setPlayerNumber(int playerNumber)
     m_playerNumber = playerNumber;
 }
 
+QColor Unit::playerColor() const
+{
+    return m_playerColor;
+}
+
+void Unit::setPlayerColor(const QColor &playerColor)
+{
+    m_playerColor = playerColor;
+}
+
 int Unit::playerNumber() const
 {
     return m_playerNumber;

@@ -27,9 +27,13 @@ public:
     int playerNumber() const; //!< Getter of m_playerNumber.
     void setPlayerNumber(int playerNumber); //!< Setter of m_playerNumber.
 
+    QColor playerColor() const; //!< Getter of m_playerColor.
+    void setPlayerColor(const QColor &playerColor); //!< Setter of m_playerColor.
+
 private:
     QString m_name; //!< Name of the unit.
     int m_playerNumber; //!< Player number who owns the unit.
+    QColor m_playerColor; //!< Player color.
     int m_movementPoints; //!< Number of current movement points left.
     int m_maxMovementPoints; //!< Maximum number of movement points.
     QImage* m_image; //!< Image of the unit.

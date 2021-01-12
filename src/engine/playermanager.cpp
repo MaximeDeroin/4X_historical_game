@@ -2,7 +2,9 @@
 
 PlayerManager::PlayerManager(int playerNumber):
     m_playerNumber(playerNumber),
-    m_cities()
+    m_units(),
+    m_cities(),
+    m_color(playerColor())
 {
 
 }
@@ -28,6 +30,32 @@ void PlayerManager::addUnit(Unit *unitType, MapTile *unitPosition)
 {
     Unit* newUnit = new Unit(*unitType);
     newUnit->setPlayerNumber(m_playerNumber);
+    newUnit->setPlayerColor(m_color);
     m_units.push_back(newUnit);
     unitPosition->setUnit(newUnit);
+}
+
+QColor PlayerManager::playerColor()
+{
+    switch (m_playerNumber)
+    {
+    case 1:
+        return Qt::blue;
+    case 2:
+        return Qt::green;
+    case 3:
+        return Qt::yellow;
+    case 4:
+        return Qt::magenta;
+    case 5:
+        return Qt::cyan;
+    case 6:
+        return Qt::lightGray;
+    case 7:
+        return Qt::darkYellow;
+    case 8:
+        return Qt::darkCyan;
+    default:
+        return Qt::darkGreen;
+    }
 }

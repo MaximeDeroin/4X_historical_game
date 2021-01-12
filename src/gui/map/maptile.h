@@ -130,6 +130,14 @@ private:
      * \brief Updates the message to display when the player hovers over the tile.
      */
     void updateToolTip();
+
+    /*!
+     * \brief Draws a square around the tile, with a margin to the tile border.
+     * \param[in] painter Painter of the object.
+     * \param[in] margin Margin of the square.
+     * \param[in] color Color of the square.
+     */
+    void drawSquare(QPainter *painter, double margin, const QColor &color);
 };
 
 #endif // MAPTILE_H

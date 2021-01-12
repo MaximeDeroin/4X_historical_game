@@ -31,6 +31,10 @@ private:
     int m_playerNumber; //!< Number of the player.
     QVector<Unit*> m_units; //!< List of units.
     QVector<City*> m_cities; //!< List of cities.
+
+    QColor m_color; //!< Player color.
+
+    QColor playerColor();
 };
 
 #endif // PLAYERMANAGER_H

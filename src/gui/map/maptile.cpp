@@ -42,6 +42,18 @@ QRectF MapTile::boundingRect() const
     return QRectF(0, 0, TILE_SIZE, TILE_SIZE);
 }
 
+void MapTile::drawSquare(QPainter *painter, double margin, const QColor& color)
+{
+    double TILESIZE(static_cast<double>(TILE_SIZE));
+    QPen pen(color, TILESIZE/40, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin);
+    painter->setPen(pen);
+
+    painter->drawLine(margin, margin, TILESIZE-margin, margin);
+    painter->drawLine(TILESIZE-margin, margin, TILESIZE-margin, TILESIZE-margin);
+    painter->drawLine(TILESIZE-margin, TILESIZE-margin, margin, TILESIZE-margin);
+    painter->drawLine(margin, TILESIZE-margin, margin, margin);
+}
+
 void MapTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
     Q_UNUSED(item)
@@ -70,30 +82,17 @@ void MapTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
         QRectF sourceModifier(0.0, 0.0, unitImage->size().width(),  unitImage->size().height());
         if (unitImage->size() != QSize(0,0))
             painter->drawImage(targetUnit, *unitImage, sourceModifier);
+        drawSquare(painter, double(TILESIZE/8.0), m_unit->playerColor());
     }
 
     if (m_selected)
     {
-        double MARGIN = TILESIZE/20;
-        QPen pen(Qt::red, TILESIZE/40, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin);
-        painter->setPen(pen);
-
-        painter->drawLine(MARGIN, MARGIN, TILESIZE-MARGIN, MARGIN);
-        painter->drawLine(TILESIZE-MARGIN, MARGIN, TILESIZE-MARGIN, TILESIZE-MARGIN);
-        painter->drawLine(TILESIZE-MARGIN, TILESIZE-MARGIN, MARGIN, TILESIZE-MARGIN);
-        painter->drawLine(MARGIN, TILESIZE-MARGIN, MARGIN, MARGIN);
+        drawSquare(painter, double(TILESIZE/20.0), Qt::red);
     }
 
     if (m_canBeReached)
     {
-        double MARGIN = TILESIZE/20;
-        QPen pen(Qt::darkRed, TILESIZE/40, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin);
-        painter->setPen(pen);
-
-        painter->drawLine(MARGIN, MARGIN, TILESIZE-MARGIN, MARGIN);
-        painter->drawLine(TILESIZE-MARGIN, MARGIN, TILESIZE-MARGIN, TILESIZE-MARGIN);
-        painter->drawLine(TILESIZE-MARGIN, TILESIZE-MARGIN, MARGIN, TILESIZE-MARGIN);
-        painter->drawLine(MARGIN, TILESIZE-MARGIN, MARGIN, MARGIN);
+        drawSquare(painter, double(TILESIZE/20.0), Qt::darkRed);
     }
 }
 
