@@ -54,6 +54,13 @@ public slots:
      */
     void currentPlayerTurnEnded();
 
+    /*!
+     * \brief Check if move request is valid.
+     * \param[in] origin Origin tile.
+     * \param[in] destination Destination tile.
+     */
+    void onRequestMoveUnit(MapTile *origin, MapTile *destination);
+
 private:
     int MIN_PLAYER = 1; //!< Minimum number of player.
     int MAX_PLAYER = 10; //!< Maximum number of player.

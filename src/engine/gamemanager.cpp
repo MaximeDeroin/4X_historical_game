@@ -27,6 +27,8 @@ GameManager::GameManager(int playerNumber, QObject *parent):
     {
         m_unitsByName[unit->name()] = unit;
     }
+
+    connect(m_map, &MapManager::requestMoveUnit, this, &GameManager::onRequestMoveUnit);
 }
 
 GameManager::~GameManager()
@@ -96,4 +98,22 @@ void GameManager::currentPlayerTurnEnded()
     }
 
     emit currentPlayerChanged(m_currentPlayer+1);
+}
+
+void GameManager::onRequestMoveUnit(MapTile *origin, MapTile *destination)
+{
+    if (!origin || !destination || !(origin->unit()))
+    {
+        qDebug() << "invalid move unit requested";
+        return;
+    }
+    if (destination->unit() != nullptr)
+    {
+        return;
+    }
+    Unit* unit = origin->unit();
+    if (unit->playerNumber() == m_currentPlayer+1)
+    {
+        m_map->moveUnit(origin, destination);
+    }
 }

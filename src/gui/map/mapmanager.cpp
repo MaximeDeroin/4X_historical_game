@@ -132,7 +132,7 @@ void MapManager::onTileReleased()
             // Move unit if selected tile can be reached by currently selected unit
             if (releasedTile->canBeReached())
             {
-                moveUnit(m_currentlySelectedTile, releasedTile);
+                requestMoveUnit(m_currentlySelectedTile, releasedTile);
             }
             // click on another tile : unselect previoulsy selected
             if (m_currentlySelectedTile)
@@ -209,23 +209,13 @@ bool MapManager::isInMap(int x, int y)
 
 void MapManager::moveUnit(MapTile* origin, MapTile* destination)
 {
-    if (!origin || !destination || !(origin->unit()))
+    Unit* unit = origin->unit();
+    int dist = distance(origin, destination);
+    if (unit->movementPoints() >= dist)
     {
-        qDebug() << "invalid move unit requested";
-        return;
-    }
-
-    // cannot move to a tile occupied by another unit
-    if (destination->unit() == nullptr)
-    {
-        Unit* unit = origin->unit();
-        int dist = distance(origin, destination);
-        if (unit->movementPoints() >= dist)
-        {
-            unit->setMovementPoints(unit->movementPoints() - dist);
-            origin->setUnit(nullptr);
-            destination->setUnit(unit);
-            clearHighlightedCanBeReachedTiles();
-        }
+        unit->setMovementPoints(unit->movementPoints() - dist);
+        origin->setUnit(nullptr);
+        destination->setUnit(unit);
+        clearHighlightedCanBeReachedTiles();
     }
 }

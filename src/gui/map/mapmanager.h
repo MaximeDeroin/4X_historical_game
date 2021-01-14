@@ -40,6 +40,21 @@ public:
      */
     int distance(MapTile* first, MapTile* second);
 
+    /*!
+     * \brief Moves a unit from a tile to another if the destination does not contain a unit.
+     * \param[in] origin Origin tile.
+     * \param[in] destination Destination tile.
+     */
+    void moveUnit(MapTile *origin, MapTile *destination);
+
+signals:
+    /*!
+     * \brief Request a unit move to the game manager.
+     * \param[in] origin Origin tile.
+     * \param[in] destination Destination tile.
+     */
+    void requestMoveUnit(MapTile *origin, MapTile *destination);
+
 private slots:
     /*!
      * \brief Triggered by a tile pressed.
@@ -107,13 +122,6 @@ private:
      * \param[in] canBeReached Value to set.
      */
     void setNeighborsCanBeReached(int x, int y, bool canBeReached);
-
-    /*!
-     * \brief Moves a unit from a tile to another if the destination does not contain a unit.
-     * \param[in] origin Origin tile.
-     * \param[in] destination Destination tile.
-     */
-    void moveUnit(MapTile *origin, MapTile *destination);
 
     /*!
      * \brief Remove all tiles from tiles highlighted has reachable by selected unit.
