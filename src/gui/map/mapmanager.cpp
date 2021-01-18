@@ -165,6 +165,14 @@ void MapManager::onUnitUnselected()
     setNeighborsCanBeReached(x, y , false);
 }
 
+void MapManager::currentPlayerChanged(int PlayerNumber)
+{
+    for (MapTile* tile: m_mapTiles)
+    {
+        tile->updateToolTipIfUnit();
+    }
+}
+
 void MapManager::setNeighborsCanBeReached(int x, int y, bool canBeReached)
 {
     if (canBeReached)

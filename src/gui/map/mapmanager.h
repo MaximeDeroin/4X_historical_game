@@ -55,6 +55,14 @@ signals:
      */
     void requestMoveUnit(MapTile *origin, MapTile *destination);
 
+public slots:
+
+    /*!
+     * \brief Reacts to a change of player.
+     * \param[in] playerNumber New player number.
+     */
+    void currentPlayerChanged(int PlayerNumber);
+
 private slots:
     /*!
      * \brief Triggered by a tile pressed.

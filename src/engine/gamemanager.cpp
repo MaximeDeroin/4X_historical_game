@@ -29,6 +29,7 @@ GameManager::GameManager(int playerNumber, QObject *parent):
     }
 
     connect(m_map, &MapManager::requestMoveUnit, this, &GameManager::onRequestMoveUnit);
+    connect(this, &GameManager::currentPlayerChanged, m_map, &MapManager::currentPlayerChanged);
 }
 
 GameManager::~GameManager()
@@ -102,6 +103,7 @@ void GameManager::currentPlayerTurnEnded()
     m_players[m_currentPlayer]->processBeginTurnEvents();
 
     emit currentPlayerChanged(m_currentPlayer+1);
+
 }
 
 void GameManager::onRequestMoveUnit(MapTile *origin, MapTile *destination)

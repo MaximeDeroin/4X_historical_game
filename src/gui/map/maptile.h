@@ -69,6 +69,11 @@ public:
 
     bool isGround(); //!< Indicates if the tile is a ground tile.
 
+    /*!
+     * \brief Triggers tooltip udpdate if the tile has a unit.
+     */
+    void updateToolTipIfUnit();
+
 signals:
     /*!
      * \brief Indicates that the tile has been pressed.

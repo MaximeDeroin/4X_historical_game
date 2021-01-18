@@ -185,6 +185,14 @@ bool MapTile::isGround()
     return m_backgroundTileConf->isGround();
 }
 
+void MapTile::updateToolTipIfUnit()
+{
+    if (m_unit)
+    {
+        this->updateToolTip();
+    }
+}
+
 void MapTile::updateToolTip()
 {
     QString toolTip;
