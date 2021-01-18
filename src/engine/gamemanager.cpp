@@ -85,6 +85,8 @@ void GameManager::currentPlayerTurnEnded()
 {
     int playerNumber = m_players.size();
 
+    m_players[m_currentPlayer]->processEndTurnEvents();
+
     // If last player ended his turn, next turn
     if (m_currentPlayer == playerNumber - 1)
     {
@@ -96,6 +98,8 @@ void GameManager::currentPlayerTurnEnded()
     {
         m_currentPlayer++;
     }
+
+    m_players[m_currentPlayer]->processBeginTurnEvents();
 
     emit currentPlayerChanged(m_currentPlayer+1);
 }

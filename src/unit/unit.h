@@ -30,6 +30,8 @@ public:
     QColor playerColor() const; //!< Getter of m_playerColor.
     void setPlayerColor(const QColor &playerColor); //!< Setter of m_playerColor.
 
+    void resetMovementPoints(); //!< Resets movement points to the maximum.
+
 private:
     QString m_name; //!< Name of the unit.
     int m_playerNumber; //!< Player number who owns the unit.

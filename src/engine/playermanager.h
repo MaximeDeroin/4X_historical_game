@@ -27,6 +27,17 @@ public:
 
     void addUnit(Unit* unitType, MapTile* unitPosition);
 
+    /*!
+     * \brief Process begin turn events.
+     * For example, apply production to current buildings.
+     */
+    void processBeginTurnEvents();
+
+    /*!
+     * \brief Reset unit movements and process end turn events.
+     */
+    void processEndTurnEvents();
+
 private:
     int m_playerNumber; //!< Number of the player.
     QVector<Unit*> m_units; //!< List of units.

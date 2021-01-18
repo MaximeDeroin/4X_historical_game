@@ -50,6 +50,11 @@ void Unit::setPlayerColor(const QColor &playerColor)
     m_playerColor = playerColor;
 }
 
+void Unit::resetMovementPoints()
+{
+    m_movementPoints = m_maxMovementPoints;
+}
+
 int Unit::playerNumber() const
 {
     return m_playerNumber;

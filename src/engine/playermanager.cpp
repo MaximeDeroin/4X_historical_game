@@ -35,6 +35,19 @@ void PlayerManager::addUnit(Unit *unitType, MapTile *unitPosition)
     unitPosition->setUnit(newUnit);
 }
 
+void PlayerManager::processBeginTurnEvents()
+{
+
+}
+
+void PlayerManager::processEndTurnEvents()
+{
+    for (Unit* unit: m_units)
+    {
+        unit->resetMovementPoints();
+    }
+}
+
 QColor PlayerManager::playerColor()
 {
     switch (m_playerNumber)
