@@ -29,6 +29,7 @@ UserInterfaceManager::UserInterfaceManager(QWidget *parent) :
 UserInterfaceManager::~UserInterfaceManager()
 {
     delete ui;
+    delete m_gameManager;
 }
 
 int UserInterfaceManager::toInt(UserInterfaceManager::Page page)

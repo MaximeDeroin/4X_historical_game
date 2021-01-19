@@ -44,6 +44,7 @@ bool TileConfReader::readTileConfInFolder(TileConf::Type type, const QDir &confD
             success &= parseTileConf(type, file, tileConf);
             if (success)
                 tileConfs.push_back(tileConf);
+            delete file;
         }
     }
     return success;

@@ -36,6 +36,8 @@ public:
                       const QString& mapAbbreviation,
                       const TileBonuses& tileBonuses, QImage* image);
 
+    ~TileConf(); //!< Destructor of the class.
+
     QString mapAbbreviation() const; //!< Getter of m_mapAbbreviation.
 
     QImage *image() const; //!< Getter of m_image.

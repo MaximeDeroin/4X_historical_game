@@ -6,27 +6,38 @@
 MapManager::MapManager():
     m_currentlySelectedTile(nullptr),
     m_mapTiles(),
-    m_highlightedCanBeReached()
+    m_highlightedCanBeReached(),
+    m_reader(nullptr)
 {
 
+}
+
+MapManager::~MapManager()
+{
+    if (m_reader)
+    {
+        delete m_reader;
+    }
+
+    // do not delete map tiles who are owned by the map view.
 }
 
 bool MapManager::openMap(const QString &filename)
 {
     bool mapReadSucessfully = true;
-    MapReader reader(filename, mapReadSucessfully);
+    m_reader = new MapReader(filename, mapReadSucessfully);
 
     if (mapReadSucessfully)
     {
-        m_mapTiles = reader.mapTiles();
+        m_mapTiles = m_reader->mapTiles();
         this->connectMapTiles();
 
-        m_mapWidth = reader.mapWidth();
-        m_mapHeight = reader.mapHeight();
+        m_mapWidth = m_reader->mapWidth();
+        m_mapHeight = m_reader->mapHeight();
     }
     else
     {
-        QMessageBox messageBox("Error reading map", reader.error(),QMessageBox::Icon::Critical, 0,0,0);
+        QMessageBox messageBox("Error reading map", m_reader->error(),QMessageBox::Icon::Critical, 0,0,0);
         messageBox.setFixedSize(500,200);
         messageBox.exec();
     }

@@ -13,7 +13,7 @@ class MapManager : public QObject
 public:
     MapManager(); //!< Default constructor.
 
-    ~MapManager() = default; //!< Default destructor.
+    ~MapManager(); //!< Default destructor.
 
     /*!
      * \brief Opens a map file.
@@ -95,6 +95,8 @@ private:
     QVector<MapTile *> m_mapTiles; //!< List of map tiles.
     QVector<MapTile *> m_highlightedCanBeReached; //!< Tiles highlighted has
                                                   //!< reachable by selected unit.
+
+    MapReader* m_reader; //!< Map configuration parser.
 
     /*!
      * \brief Establishes signal connections between map tiles and the map manager.

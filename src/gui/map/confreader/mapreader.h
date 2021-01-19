@@ -22,6 +22,8 @@ public:
      */
     MapReader(const QString &filename, bool &success);
 
+    ~MapReader(); //!< Destructeur de la classe.
+
     /*!
      * \brief Errors encountered whhile reading the map file.
      * Empty if no error.

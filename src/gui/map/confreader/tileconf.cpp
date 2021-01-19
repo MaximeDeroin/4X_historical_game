@@ -14,6 +14,14 @@ TileConf::TileConf(TileConf::Type type, const QString &name, const QString &imag
 
 }
 
+TileConf::~TileConf()
+{
+    if (m_image)
+    {
+        delete m_image;
+    }
+}
+
 QString TileConf::mapAbbreviation() const
 {
     return m_mapAbbreviation;

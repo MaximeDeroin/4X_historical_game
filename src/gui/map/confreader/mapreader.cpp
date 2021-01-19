@@ -31,6 +31,20 @@ MapReader::MapReader(const QString &filename, bool &success):
     parse(file, success);
 }
 
+MapReader::~MapReader()
+{
+    // do not delete map tiles who are owned by the map view.
+
+    for (TileConf* conf: m_tilesConf)
+    {
+        delete conf;
+    }
+    for (TileConf* conf: m_resourcesConf)
+    {
+        delete conf;
+    }
+}
+
 QString MapReader::error() const
 {
     return m_error;

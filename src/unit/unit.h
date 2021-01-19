@@ -12,6 +12,8 @@ class Unit
 public:
     explicit Unit();
 
+    ~Unit();
+
     QString name() const;  //!< Getter of m_name.
     void setName(const QString &name); //!< Setter of m_name.
 

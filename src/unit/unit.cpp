@@ -10,6 +10,11 @@ Unit::Unit():
 
 }
 
+Unit::~Unit()
+{
+
+}
+
 void Unit::setName(const QString &name)
 {
     m_name = name;
