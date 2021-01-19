@@ -10,19 +10,33 @@
 class City
 {
 public:
-    City();
-    ~City();
+    City(); //!< Default constructor.
 
+    ~City(); //!< Default destructor.
+
+    /*!
+     * \brief Update city on new turn.
+     */
     void newTurnCityUpdate();
+
+    /*!
+     * \brief Update food related parameters of the city on new turn.
+     */
     void newTurnFoodUpdate();
+
+    /*!
+     * \brief Update production related parameters of the city on new turn.
+     */
     void newTurnProdUpdate();
 
-private:
-    QString m_name;
-    QVector<Building*> m_builtBuildings;
-    QVector<Building*> m_availableBuildings;
+    int level() const; //!< Getter of m_level.
 
-    Building* m_currentBuilding;
+private:
+    QString m_name; //!< Name of the city.
+    QVector<Building*> m_builtBuildings; //!< List of built buildings.
+    QVector<Building*> m_availableBuildings; //!< List of available buildings.
+
+    Building* m_currentBuilding; //!< Current building being built.
 
     int m_level; //!< Level of the city
     int m_currentProdPerTurn; //!< Current production per turn of the city.

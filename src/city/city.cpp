@@ -61,6 +61,11 @@ void City::newTurnProdUpdate()
     }
 }
 
+int City::level() const
+{
+    return m_level;
+}
+
 
 int City::nextLevelFoodThreshold()
 {

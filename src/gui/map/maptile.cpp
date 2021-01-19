@@ -76,6 +76,11 @@ void MapTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
             painter->drawImage(target, *m_modifierImage, sourceModifier);
     }
 
+    if (m_city)
+    {
+
+    }
+
     if (m_unit && m_unit->image())
     {
         QImage* unitImage = m_unit->image();

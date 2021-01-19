@@ -4,6 +4,7 @@
 #include <QGraphicsObject>
 #include "confreader/tileconf.h"
 #include "unit/unit.h"
+#include "city/city.h"
 
 /*!
  * \brief This class manages a tile on the graphical user interface.
@@ -128,7 +129,9 @@ private:
 
     TileConf* m_backgroundTileConf; //!< Configuration of the background.
     TileConf* m_modifierTileConf; //!< Configuration of the modifier.
-    Unit* m_unit; //!< Configuration of the unit.
+
+    Unit* m_unit; //!< Configuration of the unit on the tile.
+    City* m_city; //!< Configuration of the city on the tile.
     TileBonuses m_tileBonuses; //!< Tile bonuses.
 
     /*!
