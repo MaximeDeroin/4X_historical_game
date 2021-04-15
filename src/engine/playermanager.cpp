@@ -33,6 +33,19 @@ void PlayerManager::addUnit(Unit *unitType, MapTile *unitPosition)
     newUnit->setPlayerColor(m_color);
     m_units.push_back(newUnit);
     unitPosition->setUnit(newUnit);
+
+    //addCity(unitPosition);
+}
+
+void PlayerManager::addCity(MapTile *position)
+{
+    if (!position->city()) //TODO : change city creation condition
+    {
+        City* newCity = new City();
+//    newCity->setCityColor(m_color);
+        m_cities.push_back(newCity);
+        position->setCity(newCity);
+    }
 }
 
 void PlayerManager::processBeginTurnEvents()

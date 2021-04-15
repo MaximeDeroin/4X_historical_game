@@ -25,7 +25,18 @@ public:
      */
     void setStartingPosition(MapTile* statingTile);
 
+    /*!
+     * \brief Adds a unit on a tile for the current player.
+     * \param[in] unitType Unit type to add.
+     * \param[in] unitPosition Position too add the unit to.
+     */
     void addUnit(Unit* unitType, MapTile* unitPosition);
+
+    /*!
+     * \brief Adds a city on a tile for the current player.
+     * \param[in] position Position too add the city to.
+     */
+    void addCity(MapTile* position);
 
     /*!
      * \brief Process begin turn events.
@@ -45,6 +56,10 @@ private:
 
     QColor m_color; //!< Player color.
 
+    /*!
+     * \brief Defines color for each player.
+     * \return Color of the current player.
+     */
     QColor playerColor();
 };
 

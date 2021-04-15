@@ -24,6 +24,8 @@ public:
 
     QVector<MapTile *> mapTiles() const; //!< Getter of m_mapTiles.
 
+    MapTile *currentlySelectedTile() const; //!< Getter of selected tile.
+
     /*!
      * \brief Selects starting points for the players of the game.
      * Starting points have a distance of at least 6 between one another.
@@ -54,6 +56,12 @@ signals:
      * \param[in] destination Destination tile.
      */
     void requestMoveUnit(MapTile *origin, MapTile *destination);
+
+    /*!
+     * \brief Indicates a change of the selected tile.
+     * \param[in] New selected tile.
+     */
+    void newTileSelected(MapTile* tile);
 
 public slots:
 
@@ -90,7 +98,7 @@ private:
     int m_mapHeight; //!< Height of the map.
 
     MapTile* m_currentTilePressed; //!< @todo see if useful
-    MapTile* m_currentlySelectedTile; //!< @todo see if useful
+    MapTile* m_currentlySelectedTile; //!< Selected tile.
 
     QVector<MapTile *> m_mapTiles; //!< List of map tiles.
     QVector<MapTile *> m_highlightedCanBeReached; //!< Tiles highlighted has

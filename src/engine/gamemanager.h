@@ -35,6 +35,11 @@ public:
      */
     void startGame();
 
+    /*!
+     * Executes a unit special action
+     */
+    void executeAction(UnitAction action);
+
 signals:
     /*!
      * \brief Indicates a change of turn.
@@ -48,6 +53,12 @@ signals:
      */
     void currentPlayerChanged(int PlayerNumber);
 
+    /*!
+     * \brief Indicates arrival of a unit on a tile.
+     * \param[in] unit New unit on the tile.
+     */
+    void newTileUnit(Unit* unit);
+
 public slots:
     /*!
      * \brief Manages an end of turn.
@@ -60,6 +71,13 @@ public slots:
      * \param[in] destination Destination tile.
      */
     void onRequestMoveUnit(MapTile *origin, MapTile *destination);
+
+    /*!
+     * \brief Manages a new tile selection. If a unit is on the tile, send unit info to the
+     * UserInterfaceManager to display the action buttons.
+     * \param[in] tile Selected tile.
+     */
+    void onNewTileSelected(MapTile* tile);
 
 private:
     int MIN_PLAYER = 1; //!< Minimum number of player.

@@ -225,6 +225,9 @@
            </property>
           </spacer>
          </item>
+         <item>
+          <layout class="QVBoxLayout" name="unitActions_layout"/>
+         </item>
         </layout>
        </item>
       </layout>

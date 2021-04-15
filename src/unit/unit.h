@@ -1,8 +1,9 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-#include <QString>
 #include <QImage>
+#include <QMap>
+#include "unitaction.h"
 
 /*!
  * \brief Stores data of a unit in the game.
@@ -10,9 +11,9 @@
 class Unit
 {
 public:
-    explicit Unit();
+    explicit Unit(); //!< Constructor of the class.
 
-    ~Unit();
+    ~Unit(); //!< Destructor of the class.
 
     QString name() const;  //!< Getter of m_name.
     void setName(const QString &name); //!< Setter of m_name.
@@ -34,6 +35,12 @@ public:
 
     void resetMovementPoints(); //!< Resets movement points to the maximum.
 
+    void addAction(UnitAction action); //!< Adds an action to the unit class.
+
+    QVector<UnitAction> actions() const; //!< List of actions doable by the unit.
+
+    QMap<UnitAction, bool> actionAvailable() const; //!< Indicates for each action if it is available
+
 private:
     QString m_name; //!< Name of the unit.
     int m_playerNumber; //!< Player number who owns the unit.
@@ -41,6 +48,9 @@ private:
     int m_movementPoints; //!< Number of current movement points left.
     int m_maxMovementPoints; //!< Maximum number of movement points.
     QImage* m_image; //!< Image of the unit.
+
+    QVector<UnitAction> m_unitActions; //!< List of actions doable by the unit.
+    QMap<UnitAction, bool> m_actionAvailable; //!< Indicates for each action if it is available
 };
 
 #endif // UNIT_H

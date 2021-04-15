@@ -75,6 +75,9 @@ public:
      */
     void updateToolTipIfUnit();
 
+    City *city() const; //!< Getter of m_city.
+    void setCity(City *city); //!< Setter of m_city.
+
 signals:
     /*!
      * \brief Indicates that the tile has been pressed.

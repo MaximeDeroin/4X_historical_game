@@ -23,7 +23,12 @@ UserInterfaceManager::UserInterfaceManager(QWidget *parent) :
     connect(m_gameManager, &GameManager::currentPlayerChanged,
             this, &UserInterfaceManager::currentPlayerChanged);
 
+    connect(m_gameManager, &GameManager::newTileUnit, this, &UserInterfaceManager::displayUnitActions);
+
     this->show();
+
+    // start the game immediately
+    playButtonPushed();
 }
 
 UserInterfaceManager::~UserInterfaceManager()
@@ -87,7 +92,55 @@ void UserInterfaceManager::currentPlayerChanged(int playerNumber)
     ui->currentPlayerLineEdit->setText(QString::number(playerNumber));
 }
 
+void UserInterfaceManager::displayUnitActions(Unit *unit)
+{
+    clearLayout(ui->unitActions_layout);
+    if (unit)
+    {
+        for (UnitAction action: unit->actions())
+        {
+            QString actionName = unitActionString(action);
+            QPushButton* actionButton = new QPushButton(actionName);
+            actionButton->setProperty("actionId", static_cast<int>(action));
+            ui->unitActions_layout->addWidget(actionButton);
+            connect(actionButton, &QPushButton::clicked, this, &UserInterfaceManager::onActionClicked);
+        }
+    }
+}
+
+//@todo: bug: can move to current tile (wastes MP)
+void UserInterfaceManager::onActionClicked()
+{
+    QPushButton* actionButton = static_cast<QPushButton*>(sender());
+    if (actionButton)
+    {
+        UnitAction action = static_cast<UnitAction>((actionButton->property("actionId").toInt()));
+
+        m_gameManager->executeAction(action);
+    }
+}
+
 bool UserInterfaceManager::isVisibleAndEnabled(QPushButton* button)
 {
     return button->isVisible() && button->isEnabled();
 }
+
+// should be move later
+void clearLayout(QLayout *layout)
+{
+    QLayoutItem *item;
+    while((item = layout->takeAt(0)))
+    {
+        if (item->layout())
+        {
+            clearLayout(item->layout());
+            delete item->layout();
+        }
+        if (item->widget())
+        {
+           delete item->widget();
+        }
+        delete item;
+    }
+}
+

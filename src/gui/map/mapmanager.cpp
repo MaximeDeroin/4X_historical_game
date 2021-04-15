@@ -130,6 +130,7 @@ void MapManager::onTilePressed()
 void MapManager::onTileReleased()
 {
     MapTile* releasedTile = dynamic_cast<MapTile*>(sender());
+    //Note (tile pressed = tile release) verif does not work
     if (releasedTile != nullptr && releasedTile == m_currentTilePressed)
     {
         // click on selected tile unselects it
@@ -143,9 +144,9 @@ void MapManager::onTileReleased()
             // Move unit if selected tile can be reached by currently selected unit
             if (releasedTile->canBeReached())
             {
-                requestMoveUnit(m_currentlySelectedTile, releasedTile);
+                emit requestMoveUnit(m_currentlySelectedTile, releasedTile);
             }
-            // click on another tile : unselect previoulsy selected
+            // click on another tile : unselect previously selected
             if (m_currentlySelectedTile)
             {
                 m_currentlySelectedTile->setSelected(false);
@@ -153,6 +154,7 @@ void MapManager::onTileReleased()
             m_currentlySelectedTile = releasedTile;
             releasedTile->setSelected(true);
         }
+        emit newTileSelected(releasedTile);
     }
 }
 
@@ -174,6 +176,11 @@ void MapManager::onUnitUnselected()
     int x = selectedTile->x();
     int y = selectedTile->y();
     setNeighborsCanBeReached(x, y , false);
+}
+
+MapTile *MapManager::currentlySelectedTile() const
+{
+    return m_currentlySelectedTile;
 }
 
 void MapManager::currentPlayerChanged(int PlayerNumber)

@@ -11,7 +11,7 @@ class UserInterfaceManager;
 }
 
 /*!
- * \brief Manages the Graphical µUser Interface of the game.
+ * \brief Manages the Graphical User Interface of the game.
  * UI file describes the GUI layout.
  */
 class UserInterfaceManager : public QWidget
@@ -84,6 +84,17 @@ private slots:
      */
     void currentPlayerChanged(int playerNumber);
 
+    /*!
+     * \brief Displays the action buttons of a unit.
+     * \param[in] unit Unit possessing the actions.
+     */
+    void displayUnitActions(Unit* unit);
+
+    /*!
+     * \brief Reacts to an action button press.
+     */
+    void onActionClicked();
+
 private:
     Ui::UserInterfaceManager *ui; //!< GUI description.
 
@@ -96,5 +107,11 @@ private:
      */
     bool isVisibleAndEnabled(QPushButton *button);
 };
+
+/*!
+ * \brief Clears a layout.
+ * \param[in] layout Layout to clear.
+ */
+void clearLayout(QLayout *layout);
 
 #endif // USERINTERFACEMANAGER_H

@@ -31,6 +31,10 @@ public:
 
     int level() const; //!< Getter of m_level.
 
+    int nextLevelFoodThreshold(); //!< Amount of food to reach next level.
+
+    int currentFood() const; //!< Current food produced at this level.
+
 private:
     QString m_name; //!< Name of the city.
     QVector<Building*> m_builtBuildings; //!< List of built buildings.
@@ -45,7 +49,6 @@ private:
 
     int m_surplusProd; //!< Surplus of production from ending a building construction.
 
-    int nextLevelFoodThreshold(); //!< Amount of food to reach next level.
 };
 
 #endif // CITY_H

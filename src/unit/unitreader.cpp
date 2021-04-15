@@ -65,7 +65,10 @@ bool UnitReader::parseUnit(QFile *file, Unit*& unitConf)
             }
             else if (variableName == "action")
             {
-            // else add action
+                if (variableValue == "settle")
+                {
+                    unitConf->addAction(UnitAction::SETTLE);
+                }
             }
         }
     }

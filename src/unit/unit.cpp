@@ -3,9 +3,12 @@
 Unit::Unit():
     m_name("Unit"),
     m_playerNumber(-1),
+    m_playerColor(),
     m_movementPoints(1),
     m_maxMovementPoints(1),
-    m_image(nullptr)
+    m_image(nullptr),
+    m_unitActions(),
+    m_actionAvailable()
 {
 
 }
@@ -58,6 +61,22 @@ void Unit::setPlayerColor(const QColor &playerColor)
 void Unit::resetMovementPoints()
 {
     m_movementPoints = m_maxMovementPoints;
+}
+
+void Unit::addAction(UnitAction action)
+{
+    m_unitActions.push_back(action);
+    m_actionAvailable[action] = true; // or default value
+}
+
+QVector<UnitAction> Unit::actions() const
+{
+    return m_unitActions;
+}
+
+QMap<UnitAction, bool> Unit::actionAvailable() const
+{
+    return m_actionAvailable;
 }
 
 int Unit::playerNumber() const

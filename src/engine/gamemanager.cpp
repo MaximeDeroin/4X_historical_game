@@ -29,6 +29,7 @@ GameManager::GameManager(int playerNumber, QObject *parent):
     }
 
     connect(m_map, &MapManager::requestMoveUnit, this, &GameManager::onRequestMoveUnit);
+    connect(m_map, &MapManager::newTileSelected, this, &GameManager::onNewTileSelected);
     connect(this, &GameManager::currentPlayerChanged, m_map, &MapManager::currentPlayerChanged);
 }
 
@@ -82,6 +83,18 @@ void GameManager::startGame()
 
 }
 
+void GameManager::executeAction(UnitAction action)
+{
+    switch (action)
+    {
+        case UnitAction::SETTLE:
+            m_players.at(m_currentPlayer)->addCity(m_map->currentlySelectedTile());
+            break;
+        default:
+            return;
+    }
+}
+
 void GameManager::currentPlayerTurnEnded()
 {
     int playerNumber = m_players.size();
@@ -121,5 +134,17 @@ void GameManager::onRequestMoveUnit(MapTile *origin, MapTile *destination)
     if (unit->playerNumber() == m_currentPlayer+1)
     {
         m_map->moveUnit(origin, destination);
+    }
+}
+
+void GameManager::onNewTileSelected(MapTile *tile)
+{
+    if (tile->unit() && tile->unit()->playerNumber() == m_currentPlayer+1)
+    {
+        emit newTileUnit(tile->unit());
+    }
+    else
+    {
+        emit newTileUnit(nullptr);
     }
 }

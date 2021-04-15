@@ -13,6 +13,7 @@ MapTile::MapTile(int x, int y, TileConf *tileConf):
     m_backgroundTileConf(tileConf),
     m_modifierTileConf(nullptr),
     m_unit(nullptr),
+    m_city(nullptr),
     m_tileBonuses()
 {
     addTileBonuses(tileConf->tileBonuses());
@@ -78,7 +79,15 @@ void MapTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
 
     if (m_city)
     {
+        QPen pen(Qt::black, TILESIZE/40, Qt::SolidLine, Qt::FlatCap, Qt::RoundJoin);
+        painter->setPen(pen);
 
+        QRectF citytextRect(TILESIZE/4, TILESIZE/4, TILESIZE/2, TILESIZE/2);
+        QFont font=painter->font() ;
+        font.setPointSize(18);
+        painter->setFont(font);
+//        painter->drawText(QPointF(TILESIZE/4,TILESIZE/4), QString(m_city->level()));
+        painter->drawText(citytextRect, QString::number(m_city->level()));
     }
 
     if (m_unit && m_unit->image())
@@ -138,6 +147,17 @@ void MapTile::addTileBonuses(const TileBonuses &bonusesToAdd)
             m_tileBonuses[type] = bonusesToAdd[type];
         }
     }
+}
+
+City *MapTile::city() const
+{
+    return m_city;
+}
+
+void MapTile::setCity(City *city)
+{
+    m_city = city;
+    this->updateToolTip();
 }
 
 Unit *MapTile::unit() const
@@ -227,6 +247,16 @@ void MapTile::updateToolTip()
                                             .arg(m_unit->playerNumber())
                                             .arg(m_unit->movementPoints())
                                             .arg(m_unit->maxMovementPoints());
+    }
+
+    if (m_city)
+    {
+
+        toolTip += "\n";
+        toolTip += QString("City level %1").arg(m_city->level());
+        toolTip += "\n";
+        toolTip += QString("Food for next level: %1/%2").arg(m_city->currentFood())
+                                                        .arg(m_city->nextLevelFoodThreshold());
     }
 
     setToolTip(toolTip);
