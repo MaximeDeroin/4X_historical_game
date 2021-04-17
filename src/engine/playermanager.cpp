@@ -50,7 +50,10 @@ void PlayerManager::addCity(MapTile *position)
 
 void PlayerManager::processBeginTurnEvents()
 {
-
+    for (City* city: m_cities)
+    {
+        city->newTurnCityUpdate();
+    }
 }
 
 void PlayerManager::processEndTurnEvents()
