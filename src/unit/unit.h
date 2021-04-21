@@ -41,6 +41,15 @@ public:
 
     QMap<UnitAction, bool> actionAvailable() const; //!< Indicates for each action if it is available
 
+    QVector<UnitAction> unitActions() const; //!< Getter of m_unitActions.
+
+    /*!
+     * \brief Sets one action availability.
+     * \param[in] action Action to set.
+     * \param[in] avalability Availability of the action.
+     */
+    void setActionAvailability(UnitAction action, bool avalability);
+
 private:
     QString m_name; //!< Name of the unit.
     int m_playerNumber; //!< Player number who owns the unit.

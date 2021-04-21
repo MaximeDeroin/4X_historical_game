@@ -104,6 +104,7 @@ void UserInterfaceManager::displayUnitActions(Unit *unit)
             actionButton->setProperty("actionId", static_cast<int>(action));
             ui->unitActions_layout->addWidget(actionButton);
             connect(actionButton, &QPushButton::clicked, this, &UserInterfaceManager::onActionClicked);
+            actionButton->setEnabled(unit->actionAvailable()[action]);
         }
     }
 }

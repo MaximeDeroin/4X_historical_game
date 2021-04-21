@@ -71,6 +71,12 @@ public slots:
      */
     void currentPlayerChanged(int PlayerNumber);
 
+    /*!
+     * \brief Stores the position of a new city.
+     * \param[in] position Position of the new city.
+     */
+    void onCityCreated(MapTile* position);
+
 private slots:
     /*!
      * \brief Triggered by a tile pressed.
@@ -103,7 +109,7 @@ private:
     QVector<MapTile *> m_mapTiles; //!< List of map tiles.
     QVector<MapTile *> m_highlightedCanBeReached; //!< Tiles highlighted has
                                                   //!< reachable by selected unit.
-
+    QVector<MapTile*> m_cityTiles; //!< Cities of the game.
     MapReader* m_reader; //!< Map configuration parser.
 
     /*!
@@ -145,6 +151,14 @@ private:
      * \brief Remove all tiles from tiles highlighted has reachable by selected unit.
      */
     void clearHighlightedCanBeReachedTiles();
+
+    /*!
+     * \brief Checks if a settler can settle.
+     * To settle, the settler must be at least 4 tiles aways from all
+     * other cities.
+     * \param[in] unitPosition Unit position.
+     */
+    void checkIsCityCreation(MapTile *unitPosition);
 };
 
 #endif // MAPMANAGER_H

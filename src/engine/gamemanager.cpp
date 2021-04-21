@@ -31,6 +31,10 @@ GameManager::GameManager(int playerNumber, QObject *parent):
     connect(m_map, &MapManager::requestMoveUnit, this, &GameManager::onRequestMoveUnit);
     connect(m_map, &MapManager::newTileSelected, this, &GameManager::onNewTileSelected);
     connect(this, &GameManager::currentPlayerChanged, m_map, &MapManager::currentPlayerChanged);
+    for (PlayerManager* player: m_players)
+    {
+        connect(player, &PlayerManager::cityCreated, m_map, &MapManager::onCityCreated);
+    }
 }
 
 GameManager::~GameManager()

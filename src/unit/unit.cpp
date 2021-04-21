@@ -79,6 +79,16 @@ QMap<UnitAction, bool> Unit::actionAvailable() const
     return m_actionAvailable;
 }
 
+QVector<UnitAction> Unit::unitActions() const
+{
+    return m_unitActions;
+}
+
+void Unit::setActionAvailability(UnitAction action, bool avalability)
+{
+    m_actionAvailable[action] = avalability;
+}
+
 int Unit::playerNumber() const
 {
     return m_playerNumber;

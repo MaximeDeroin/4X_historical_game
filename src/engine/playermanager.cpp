@@ -45,6 +45,7 @@ void PlayerManager::addCity(MapTile *position)
 //    newCity->setCityColor(m_color);
         m_cities.push_back(newCity);
         position->setCity(newCity);
+        emit cityCreated(position);
     }
 }
 

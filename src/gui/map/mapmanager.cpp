@@ -7,6 +7,7 @@ MapManager::MapManager():
     m_currentlySelectedTile(nullptr),
     m_mapTiles(),
     m_highlightedCanBeReached(),
+    m_cityTiles(),
     m_reader(nullptr)
 {
 
@@ -178,6 +179,12 @@ void MapManager::onUnitUnselected()
     setNeighborsCanBeReached(x, y , false);
 }
 
+void MapManager::onCityCreated(MapTile* cityPosition)
+{
+    m_cityTiles.push_back(cityPosition);
+    checkIsCityCreation(cityPosition);
+}
+
 MapTile *MapManager::currentlySelectedTile() const
 {
     return m_currentlySelectedTile;
@@ -243,5 +250,28 @@ void MapManager::moveUnit(MapTile* origin, MapTile* destination)
         origin->setUnit(nullptr);
         destination->setUnit(unit);
         clearHighlightedCanBeReachedTiles();
+
+        if (unit->unitActions().contains(UnitAction::SETTLE))
+        {
+            checkIsCityCreation(destination);
+        }
     }
+}
+
+void MapManager::checkIsCityCreation(MapTile* unitPosition)
+{
+    bool canSettle = true;
+    for (MapTile* cityTile: m_cityTiles)
+    {
+        if (cityTile->city())
+        {
+            if (distance(unitPosition, cityTile) <= 3)
+            {
+                canSettle = false;
+                break;
+            }
+        }
+    }
+
+    unitPosition->unit()->setActionAvailability(UnitAction::SETTLE, canSettle);
 }

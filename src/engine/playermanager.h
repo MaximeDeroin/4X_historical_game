@@ -8,8 +8,9 @@
 /*!
  * \brief Stores information of a player.
  */
-class PlayerManager
+class PlayerManager: public QObject
 {
+    Q_OBJECT
 public:
     /*!
      * \brief Constructor of the class.
@@ -48,6 +49,13 @@ public:
      * \brief Reset unit movements and process end turn events.
      */
     void processEndTurnEvents();
+
+signals:
+    /*!
+     * \brief Indicates a city creation.
+     * \param[in] position Position of the city created.
+     */
+    void cityCreated(MapTile *position);
 
 private:
     int m_playerNumber; //!< Number of the player.
