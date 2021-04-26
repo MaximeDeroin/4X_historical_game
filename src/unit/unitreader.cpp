@@ -35,40 +35,41 @@ QVector<Unit *> UnitReader::readUnitTypes(bool &success)
 bool UnitReader::parseUnit(QFile *file, Unit*& unitConf)
 {
     bool success = true;
-    QStringList fileLines = readFileLines(file);
+
+    StringPairs confValues = ConfFileReader::parseConfFile(file, success);
+
+    //QStringList fileLines = ConfFileReader::readFileLines(file);
     unitConf = new Unit;
-    for (QString line: fileLines)
-    {
-        QStringList lineWords(line.split(":"));
-        if (lineWords.size() == 2)
+
+    for (const StringPair& confValue: confValues) {
+
+        QString variableName = confValue.first;
+        QString variableValue = confValue.second;
+
+        if (variableName == "name")
         {
-            QString variableName = lineWords.at(0);
-            QString variableValue = lineWords.at(1);
-            if (variableName == "name")
+            unitConf->setName(variableValue);
+        }
+        else if (variableName == "movement_points")
+        {
+            bool ok = true;
+            int movementPoints = variableValue.toInt(&ok);
+            if (ok)
             {
-                unitConf->setName(variableValue);
+                unitConf->setMovementPoints(movementPoints);
+                unitConf->setMaxMovementPoints(movementPoints);
             }
-            else if (variableName == "movement_points")
+        }
+        else if (variableName == "image_name")
+        {
+            QString imagePath(UNIT_IMAGE_FOLDER+variableValue);
+            unitConf->setImage(new QImage(imagePath));
+        }
+        else if (variableName == "action")
+        {
+            if (variableValue == "settle")
             {
-                bool ok = true;
-                int movementPoints = variableValue.toInt(&ok);
-                if (ok)
-                {
-                    unitConf->setMovementPoints(movementPoints);
-                    unitConf->setMaxMovementPoints(movementPoints);
-                }
-            }
-            else if (variableName == "image_name")
-            {
-                QString imagePath(UNIT_IMAGE_FOLDER+variableValue);
-                unitConf->setImage(new QImage(imagePath));
-            }
-            else if (variableName == "action")
-            {
-                if (variableValue == "settle")
-                {
-                    unitConf->addAction(UnitAction::SETTLE);
-                }
+                unitConf->addAction(UnitAction::SETTLE);
             }
         }
     }
@@ -76,14 +77,3 @@ bool UnitReader::parseUnit(QFile *file, Unit*& unitConf)
     return success;
 }
 
-
-QStringList UnitReader::readFileLines(QFile *file)
-{
-    QTextStream fileStream(file);
-    QStringList fileLines;
-    while (!fileStream.atEnd())
-    {
-        fileLines << fileStream.readLine();
-    }
-    return fileLines;
-}

@@ -1,10 +1,7 @@
 #ifndef UNITREADER_H
 #define UNITREADER_H
 
-#include<QVector>
-#include <QFile>
-#include <QDir>
-#include <QTextStream>
+#include "../conf_management/conffilereader.h"
 #include "unit.h"
 
 /*!
@@ -35,13 +32,6 @@ private:
      * \return True is successfull.
      */
     bool parseUnit(QFile *file, Unit *&unitConf);
-
-    /*!
-     * \brief Converts a file into a list of lines.
-     * \param[in] file File to read
-     * \return List of lines of the file.
-     */
-    QStringList readFileLines(QFile *file);
 };
 
 static QString UNIT_IMAGE_FOLDER = ":/image/units/"; //!< Tile configuration folder.
